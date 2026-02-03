@@ -6,7 +6,7 @@ import Project from './views/Project.vue'
 import Contact from './views/Contact.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', component: Home },
     { path: '/contact', component: Contact },
