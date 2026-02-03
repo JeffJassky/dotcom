@@ -1,27 +1,35 @@
 @import "./colors.less";
 
 :root {
-  --bg-color: @white;
-  --bg-secondary: @gray-100;
-  --text-primary: @black;
+  --bg-color: @beige;
+  --bg-secondary: @beige-dark;
+  --card-bg: @white;
+  --text-title: @black;
+  --text-body: @gray-700; // Less harsh than black
   --text-secondary: @gray-600;
-  --text-muted: @gray-400;
-  --border-color: @gray-200;
+  --text-muted: @gray-500;
+  --border-color: rgba(0, 0, 0, 0.06);
   --accent-color: @black;
-  --code-bg: @gray-100;
+  --code-bg: @white;
   --selection-bg: @black;
   --selection-text: @white;
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 body.dark-theme {
   --bg-color: @black;
   --bg-secondary: @gray-900;
-  --text-primary: @gray-100;
+  --card-bg: @gray-900;
+  --text-title: @gray-100;
+  --text-body: @gray-300; // Less harsh than gray-100
   --text-secondary: @gray-400;
   --text-muted: @gray-600;
   --border-color: @gray-800;
   --accent-color: @white;
-  --code-bg: @gray-900;
+  --code-bg: @gray-800;
   --selection-bg: @white;
   --selection-text: @black;
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
 }

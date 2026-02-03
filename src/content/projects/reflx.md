@@ -24,6 +24,10 @@ Looking back, I see it differently. The one-way mirror was a pretty accurate met
 
 But the thing I built was real, and people responded to it. So I kept going.
 
+<div class="video-container">
+  <iframe src="https://player.vimeo.com/video/274183204" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ---
 
 ## Making It Feel Like Magic
@@ -66,6 +70,10 @@ The final product used that integrated touch glass. No visible sensors, no gestu
 
 Reflx started as an event rental company. Photo mirrors for parties, brand activations, fashion events. House of Yes loved us. We did events around Brooklyn and Manhattan.
 
+<div class="video-container">
+  <iframe src="https://player.vimeo.com/video/297819424" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 But event rentals are a grind. You're competing on price, hauling equipment, troubleshooting at 11pm, and your revenue resets to zero every month. I wanted something with recurring revenue - something that could scale without me being physically present at every activation.
 
 I started talking to salon owners.
@@ -78,11 +86,19 @@ The mirror solved all of this. Clients _want_ to take photos when they look good
 
 **Shannon King** of Hair & Co Brooklyn became an early believer. He put a prototype in his salon and helped me get into ISSE, a major hair industry conference in Long Beach, to connect with potential customers and partners. That kind of support from someone who actually understood the industry was invaluable.
 
+<div class="video-container">
+  <iframe src="https://player.vimeo.com/video/330253250" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 I rebranded to Aura Mirrors and started building a real product.
 
 ---
 
 ## Building Aura Mirrors
+
+<div class="video-container">
+  <iframe src="https://player.vimeo.com/video/339829105" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ### Industrial Design
 

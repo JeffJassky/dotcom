@@ -1,24 +1,31 @@
 @import "./colors.less";
 
-@font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-@font-serif: "Crimson Pro", "Playfair Display", "Georgia", serif;
-@font-mono: "JetBrains Mono", "Fira Code", "SFMono-Regular", monospace;
+@font-display: "Syne", sans-serif;
+@font-body: "Space Grotesk", sans-serif;
+@font-mono: "Space Mono", monospace;
 
 body {
-  font-family: @font-serif;
-  line-height: 1.7;
-  font-size: 20px;
+  font-family: @font-body;
+  line-height: 1.6;
+  font-size: 18px;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, .interface {
-  font-family: @font-sans;
+h1,
+h2,
+h3,
+h4,
+.interface {
+  font-family: @font-display;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  text-transform: none;
 }
 
-.technical, .metric, code, pre {
+.technical,
+.metric,
+code,
+pre {
   font-family: @font-mono;
   font-size: 0.75rem;
   letter-spacing: 0.05em;

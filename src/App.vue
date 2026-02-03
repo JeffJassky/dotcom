@@ -21,7 +21,7 @@ const toggleDark = useToggle(isDark)
         <router-link to="/">Index</router-link>
         <router-link to="/contact">Info</router-link>
         <button @click="toggleDark()" class="theme-toggle technical">
-          {{ isDark ? '[ LIGHT ]' : '[ DARK ]' }}
+          {{ isDark ? '[ DARK ]' : '[ LIGHT ]' }}
         </button>
       </nav>
     </header>

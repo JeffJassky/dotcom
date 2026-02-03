@@ -100,7 +100,11 @@ onMounted(() => {
           <h2 class="card-title">{{ project.title }}</h2>
           <p class="card-desc">{{ project.description }}</p>
           <div v-if="project.tags.length" class="card-tags">
-            <span v-for="tag in project.tags.slice(0, 4)" :key="tag" class="tag technical">
+            <span
+              v-for="tag in project.tags.slice(0, 4)"
+              :key="tag"
+              class="tag technical"
+            >
               {{ tag }}
             </span>
           </div>
@@ -123,7 +127,10 @@ onMounted(() => {
       >
         <span class="archive-year technical">{{ project.year }}</span>
         <span class="archive-title">{{ project.title }}</span>
-        <span class="archive-tags technical">{{ project.tags.slice(0, 3).join(' / ') }}</span>
+        <span
+          class="archive-tags technical"
+          >{{ project.tags.slice(0, 3).join(' / ') }}</span
+        >
         <span class="archive-arrow technical">↗</span>
       </router-link>
     </section>
@@ -157,41 +164,55 @@ onMounted(() => {
 .featured-card {
   display: block;
   text-decoration: none;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
+  color: var(--text-title);
+  border: none;
+  border-radius: 12px;
+  background: var(--card-bg);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
+  box-shadow: var(--shadow-soft);
 
   &:hover {
-    border-color: var(--text-muted);
-    transform: translateY(-4px);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
 
     .card-image img {
-      transform: scale(1.02);
+      transform: scale(1.05);
     }
 
     .card-title {
-      color: var(--accent-color, var(--text-primary));
+      color: var(--text-title); // Keep title consistent on hover
     }
   }
 }
 
 .card-image {
   width: 100%;
-  height: 240px;
+  height: 280px;
   overflow: hidden;
   background: var(--bg-secondary);
+  position: relative;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  // Atmospheric radial gradient overlay
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 100%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
+    pointer-events: none;
   }
 }
 
 .card-content {
-  padding: 1.5rem;
+  padding: 2rem;
+  background: var(--card-bg);
 }
 
 .card-year {
@@ -201,18 +222,20 @@ onMounted(() => {
 }
 
 .card-title {
+  font-family: @font-display;
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 700;
   margin: 0 0 0.75rem 0;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
   transition: color 0.3s;
+  color: var(--text-title);
 }
 
 .card-desc {
-  font-family: @font-serif;
+  font-family: @font-body;
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: var(--text-body);
   line-height: 1.5;
   margin: 0 0 1rem 0;
 }
@@ -243,7 +266,7 @@ onMounted(() => {
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--border-color);
   text-decoration: none;
-  color: var(--text-primary);
+  color: var(--text-title);
   transition: all 0.2s;
 
   &:hover {
@@ -265,6 +288,7 @@ onMounted(() => {
 .archive-title {
   font-size: 1.1rem;
   font-weight: 600;
+  color: var(--text-title);
 }
 
 .archive-tags {

@@ -62,7 +62,7 @@ onMounted(() => {
     p {
       margin: 0;
       font-size: 0.75rem;
-      color: var(--text-primary);
+      color: var(--text-title);
       
       a {
         color: inherit;
@@ -70,6 +70,24 @@ onMounted(() => {
         &:hover { text-decoration: underline; }
       }
     }
+  }
+}
+
+.post-content {
+  :deep(h1) {
+    font-family: @font-display;
+    font-size: 4rem;
+    line-height: 0.85;
+    margin-bottom: 2rem;
+    color: var(--text-title);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+  }
+
+  :deep(p) {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: var(--text-body);
   }
 }
 
