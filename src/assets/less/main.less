@@ -1,0 +1,139 @@
+@import "./themes.less";
+@import "./typography.less";
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition:
+    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.5s;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+
+    .logo {
+
+      font-size: 1rem;
+
+      font-weight: 800;
+
+      a {
+
+        color: var(--text-primary);
+
+        text-decoration: none;
+
+        &:hover { opacity: 0.7; }
+
+      }
+
+      .role {
+
+        color: var(--text-muted);
+
+        font-weight: 400;
+
+      }
+
+    }
+
+  }
+
+nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+
+  a {
+    font-family: @font-sans;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &.router-link-active {
+      color: var(--text-primary);
+      &::after {
+        content: " ■";
+        font-size: 0.5rem;
+        vertical-align: middle;
+      }
+    }
+
+    &:hover {
+      color: var(--text-primary);
+    }
+  }
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+footer {
+  margin-top: auto;
+  padding-top: 4rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: var(--text-muted);
+}
+
+// Global article styling
+article {
+  max-width: 700px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: 5rem;
+    line-height: 0.9;
+    margin-bottom: 4rem;
+    word-break: break-word;
+  }
+
+  p {
+    margin-bottom: 2rem;
+  }
+
+  img {
+    display: block;
+    width: 100vw;
+    max-width: 1000px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    filter: none;
+  }
+}
