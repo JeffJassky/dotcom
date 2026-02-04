@@ -1,13 +1,13 @@
 FEATURED: true
 TAGS: Vue, TypeScript, MediaPipe, WebRTC, Biofeedback, Machine Learning, Web Speech API
 YEAR: 2025
-HOVER_VIDEO: /video/gaze.mp4
+HOVER_VIDEO: /video/gaze.mov
 
 # **Interactive Hypnosis Through Biofeedback**
 
 ### GAZE (2025–Present)
 
-Most meditation apps talk *at* you. GAZE listens *to* you - through your camera, your microphone, and optionally an accelerometer - to create a hypnosis experience that responds to your body in real-time.
+Most meditation apps talk _at_ you. GAZE listens _to_ you - through your camera, your microphone, and optionally an accelerometer - to create a hypnosis experience that responds to your body in real-time.
 
 → [Try GAZE](https://gazedeep.space)
 
@@ -17,7 +17,7 @@ Most meditation apps talk *at* you. GAZE listens *to* you - through your camera,
 
 Traditional guided meditation is a one-way broadcast. The audio plays, you follow along, and if you're not in sync - too tense, too distracted, breathing too fast - the session just keeps going without you.
 
-GAZE flips this. By tracking subtle physiological cues, the app knows when you're relaxing, when you're drifting, when you're ready to go deeper. The session adapts to *your* state, not the other way around.
+GAZE flips this. By tracking subtle physiological cues, the app knows when you're relaxing, when you're drifting, when you're ready to go deeper. The session adapts to _your_ state, not the other way around.
 
 It's not about watching a screen. It's about the screen watching you.
 
@@ -62,12 +62,12 @@ The vision system is built on **Google's MediaPipe Face Mesh**, which provides 4
 
 The application organizes detection into specialized **Regions**:
 
-| Region | What It Tracks | Signals Produced |
-| :-- | :-- | :-- |
-| **EyesRegion** | Landmarks around eyes | `eyeOpenness`, `blink` events, `isDrooping` |
-| **HeadRegion** | 3D head pose (pitch, yaw, roll) | `isStable`, `nod`, `turn`, `headDrop` |
-| **MouthRegion** | Lip landmarks | `mouthOpenness`, `isRelaxed`, `tongueOut` |
-| **BreathRegion** | Fused facial signals | `breathSignal`, `breathRate` |
+| Region           | What It Tracks                  | Signals Produced                            |
+| :--------------- | :------------------------------ | :------------------------------------------ |
+| **EyesRegion**   | Landmarks around eyes           | `eyeOpenness`, `blink` events, `isDrooping` |
+| **HeadRegion**   | 3D head pose (pitch, yaw, roll) | `isStable`, `nod`, `turn`, `headDrop`       |
+| **MouthRegion**  | Lip landmarks                   | `mouthOpenness`, `isRelaxed`, `tongueOut`   |
+| **BreathRegion** | Fused facial signals            | `breathSignal`, `breathRate`                |
 
 ### Eye Aspect Ratio
 
@@ -103,13 +103,13 @@ These are combined through weighted averaging or Kalman filtering to produce a r
 
 Scenes in a GAZE session can require specific behaviors before proceeding. The behavior system maps high-level intents to low-level signals:
 
-| Behavior | Detection Logic |
-| :-- | :-- |
-| `head:still` | `headState.isStable === true` for specified duration |
-| `head:nod` | Rapid down-then-up pattern in `headPitch` within ~500ms |
-| `eyes:close` | `eyeOpenness` below threshold |
-| `eyes:blink` | Rapid close-open sequence detected |
-| `mouth:relax` | `mouthOpenness` above relaxation threshold |
+| Behavior       | Detection Logic                                              |
+| :------------- | :----------------------------------------------------------- |
+| `head:still`   | `headState.isStable === true` for specified duration         |
+| `head:nod`     | Rapid down-then-up pattern in `headPitch` within ~500ms      |
+| `eyes:close`   | `eyeOpenness` below threshold                                |
+| `eyes:blink`   | Rapid close-open sequence detected                           |
+| `mouth:relax`  | `mouthOpenness` above relaxation threshold                   |
 | `speech:speak` | Final transcript from Web Speech API matches expected phrase |
 
 This allows sessions to be genuinely interactive. The app can say "nod when you're ready" and actually wait for the nod.
