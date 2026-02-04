@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: Community Building, Makerspace, Business Operations, Nonprofit, West Village
+TAGS: Community Building, Makerspace, Business Operations, Nonprofit, West Village, Community
 YEAR: 2014-Present
 HOVER_VIDEO: /video/fcfl.mp4
 PRIORITY: 11

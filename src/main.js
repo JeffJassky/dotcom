@@ -11,7 +11,15 @@ const router = createRouter({
     { path: '/', component: Home },
     { path: '/contact', component: Contact },
     { path: '/project/:id', component: Project },
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    // If user uses back/forward, restore their position
+    if (savedPosition) {
+      return savedPosition
+    }
+    // Otherwise scroll to top
+    return { top: 0 }
+  }
 })
 
 createApp(App).use(router).mount('#app')

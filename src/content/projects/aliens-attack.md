@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: Experiential Marketing, Game Design, NodeJS, Raspberry Pi, Arduino, Laser Cutting, Hardware, Software
+TAGS: Experiential Marketing, Game Design, NodeJS, Raspberry Pi, Arduino, Laser Cutting, Hardware, Software, Community
 YEAR: 2016
 HOVER_VIDEO: /video/aliens-attack.mp4
 PRIORITY: 3

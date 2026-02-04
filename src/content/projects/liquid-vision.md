@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: Product Design, Prototyping, Laser Cutting, CNC, Wearable Art, Hardware
+TAGS: Product Design, Prototyping, Laser Cutting, CNC, Wearable Art, Hardware, Biology
 YEAR: 2015
 PRIORITY: 12
 

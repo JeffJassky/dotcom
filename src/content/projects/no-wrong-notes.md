@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: Vue, TypeScript, Web Audio, Music Theory, MIDI, Creative Tools, Software
+TAGS: Vue, TypeScript, Web Audio, Music Theory, MIDI, Creative Tools, Software, Music
 YEAR: 2025
 HOVER_VIDEO: /video/no-wrong-notes.mov
 PRIORITY: 9

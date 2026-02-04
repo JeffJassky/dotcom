@@ -5,7 +5,7 @@ const allProjects = ref([])
 const archiveProjects = ref([])
 const activeFilter = ref('All')
 
-const filters = ['All', 'Hardware', 'Software']
+const filters = ['All', 'Hardware', 'Software', 'Biology', 'Film & Video', 'Wellness', 'Community', 'Music']
 
 const filteredProjects = computed(() => {
   if (activeFilter.value === 'All') {
@@ -219,6 +219,7 @@ onMounted(() => {
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 
   &:hover {
     color: var(--text-title);
@@ -418,6 +419,22 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .index-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .filter-tabs {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter-tab {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.55rem;
+  }
+
   .archive-row {
     grid-template-columns: 70px 1fr 30px;
   }

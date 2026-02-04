@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: NodeJS, Python, Vue.JS, OpenCV, AWS, Computer Vision, SaaS, Software
+TAGS: NodeJS, Python, Vue.JS, OpenCV, AWS, Computer Vision, SaaS, Software, Film & Video
 YEAR: 2020-2021
 HOVER_VIDEO: /video/storyfolder.mp4
 PRIORITY: 7

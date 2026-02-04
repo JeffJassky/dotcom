@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, nextTick, computed } from 'vue'
+import { ref, onMounted, watch, nextTick, computed, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
 import texmath from 'markdown-it-texmath'
@@ -10,7 +10,7 @@ import vFadeIn from '../directives/VFadeIn' // Import the custom directive
 
 // Syntax highlighting
 import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css' // You can choose a different theme
+import 'highlight.js/styles/night-owl.css'
 
 // Markdown-it plugins
 import markdownItAttrs from 'markdown-it-attrs'
@@ -20,6 +20,31 @@ import markdownItTocDoneRight from 'markdown-it-toc-done-right'
 
 // For reading time estimate
 
+let observer = null // Declare observer outside to be accessible for disconnect
+
+function handleIntersect() {
+  // Instead of relying on individual entries, recalculate the active heading
+  // based on current scroll position whenever any heading triggers the observer
+  const headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  const scrollTop = window.scrollY;
+  const offset = 100; // How far past the top a heading needs to be to become active
+
+  let activeHeading = null;
+
+  // Find the last heading that has scrolled past the offset point
+  headings.forEach(heading => {
+    if (heading.id && heading.offsetTop <= scrollTop + offset) {
+      activeHeading = heading;
+    }
+  });
+
+  if (activeHeading) {
+    activeSectionId.value = activeHeading.id;
+  } else if (headings.length > 0 && headings[0].id) {
+    // If no heading has scrolled past, use the first one (at top of page)
+    activeSectionId.value = headings[0].id;
+  }
+}
 
 function calculateReadingTime(text) {
   const wordsPerMinute = 200 // Average reading speed
@@ -37,6 +62,7 @@ const route = useRoute()
 // Reactive variables for reading time and TOC
 const readingTimeStats = ref(null)
 const tocHtml = ref('')
+const activeSectionId = ref(null)
 
 const relatedProjects = computed(() => {
   if (!metadata.value.tags || metadata.value.tags.length === 0) {
@@ -177,10 +203,43 @@ const loadProject = () => {
     content.value = md.render(raw)
     nextTick(() => {
       applyFadeInEffects()
+      setupIntersectionObserver() // Setup observer after content is rendered
+
+      // Attach click listeners to TOC links
+      const tocLinks = document.querySelectorAll('.project-sidebar a')
+      tocLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+          const id = link.getAttribute('href').substring(1)
+          scrollToSection(event, id)
+        })
+      })
     })
   } else {
     content.value = '<h1 class="technical">404_NOT_FOUND</h1>'
     readingTimeStats.value = null
+  }
+}
+
+function setupIntersectionObserver() {
+  if (observer) {
+    observer.disconnect() // Disconnect existing observer if any
+  }
+
+  // Observe all h2 and h3 elements within the post-content
+  const headings = document.querySelectorAll('.post-content h2, .post-content h3')
+  if (headings.length > 0) {
+    // Use a rootMargin that triggers when headings reach the top area of the viewport
+    // Top margin of -80px accounts for the sticky header height
+    // Bottom margin of -70% means we only care about the top 30% of the viewport
+    observer = new IntersectionObserver(handleIntersect, {
+      root: null, // viewport
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: 0
+    })
+
+    headings.forEach(heading => {
+      observer.observe(heading)
+    })
   }
 }
 
@@ -199,8 +258,88 @@ function applyFadeInEffects() {
   }
 }
 
+function scrollToSection(event, id) {
+  event.preventDefault();
+  const targetElement = document.getElementById(id);
+  if (targetElement) {
+    // Get the element's position relative to the document
+    const rect = targetElement.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Small offset (20px) to give some breathing room above the heading
+    // The heading will become sticky at top:0, so we scroll it to near the top
+    const offset = 20;
+    const targetScrollPosition = rect.top + scrollTop - offset;
+
+    window.scrollTo({
+      top: targetScrollPosition,
+      behavior: 'smooth'
+    });
+
+    // Manually set the active section to update TOC highlighting immediately
+    activeSectionId.value = id;
+  }
+}
+
 onMounted(() => {
   loadProject()
+})
+
+onBeforeUnmount(() => {
+  if (observer) {
+    observer.disconnect()
+  }
+})
+
+watch(activeSectionId, (newId) => {
+  nextTick(() => {
+    // Logic for highlighting TOC links
+    const tocLinks = document.querySelectorAll('.project-sidebar .table-of-contents a')
+    tocLinks.forEach(link => {
+      const href = link.getAttribute('href')
+      if (href && href.startsWith('#')) {
+        const id = href.substring(1)
+        const parentLi = link.closest('li')
+        if (parentLi) {
+          if (id === newId) {
+            parentLi.classList.add('active')
+          } else {
+            parentLi.classList.remove('active')
+          }
+        }
+      }
+    })
+
+    // Logic for making only the active H2 sticky (not H3)
+    const allH2Headings = document.querySelectorAll('.post-content h2')
+    allH2Headings.forEach(heading => {
+      heading.classList.remove('sticky-header-active')
+    })
+
+    if (newId) {
+      const activeHeadingElement = document.getElementById(newId)
+      // Only make H2 elements sticky, not H3
+      if (activeHeadingElement && activeHeadingElement.tagName === 'H2') {
+        activeHeadingElement.classList.add('sticky-header-active')
+      } else if (activeHeadingElement && activeHeadingElement.tagName === 'H3') {
+        // For H3, find the parent H2 and make that sticky
+        const allH2s = Array.from(document.querySelectorAll('.post-content h2'))
+        const activeH3Top = activeHeadingElement.offsetTop
+        // Find the H2 that comes before this H3
+        let parentH2 = null
+        for (const h2 of allH2s) {
+          if (h2.offsetTop < activeH3Top) {
+            parentH2 = h2
+          } else {
+            break
+          }
+        }
+        if (parentH2) {
+          parentH2.classList.add('sticky-header-active')
+        }
+      }
+    }
+  })
 })
 
 watch(() => route.params.id, () => {
@@ -210,17 +349,8 @@ watch(() => route.params.id, () => {
 
 <template>
   <div class="project-page">
-    <aside class="project-sidebar" v-if="tocHtml" v-html="tocHtml"></aside>
-
     <div class="main-content">
       <article class="post-content">
-        <h1 class="project-title">{{ metadata.title }}</h1>
-        <h3 class="project-meta">
-          {{ metadata.year }}
-          <span v-if="readingTimeStats">
-            &bull; {{ readingTimeStats.text }}</span
-          >
-        </h3>
         <div v-html="content"></div>
       </article>
 
@@ -246,6 +376,8 @@ watch(() => route.params.id, () => {
         <router-link to="/">&lt; RETURN_TO_COLLECTION</router-link>
       </div>
     </div>
+
+    <aside class="project-sidebar" v-if="tocHtml" v-html="tocHtml"></aside>
   </div>
 </template>
 
@@ -300,7 +432,14 @@ watch(() => route.params.id, () => {
 		  }
         }
       }
+
+    li.active > a {
+      color: var(--accent-color);
+      font-weight: bold;
+      border-left: 3px solid var(--accent-color);
+      padding-left: 0.5rem; // Adjust to align with border
     }
+}
   }
 }
 
@@ -325,8 +464,14 @@ watch(() => route.params.id, () => {
 
 
 .post-content {
-  h1 { // The markdown H1 is now replaced by project-title, keeping this for internal links
-    display: none; // Hide markdown H1 as we have a dedicated project-title
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    font-family: @font-display;
+    font-weight: 700;
+    color: var(--text-title);
   }
 
   h2 {
@@ -336,13 +481,22 @@ watch(() => route.params.id, () => {
     font-family: @font-display;
     font-weight: 700;
     color: var(--text-title);
-    position: sticky;
-    top: 0; // Adjust as needed, e.g., if there's a fixed header
     background-color: var(--background-color); // Ensure content behind is not visible
     padding-top: 1.5rem; // Add some padding when sticky
     padding-bottom: 0.5rem;
     z-index: 10; // Ensure it stays above other content
     border-bottom: 1px solid var(--border-color); // Optional: A line when sticky
+  }
+
+  // This class is dynamically added to the active H2 to make it sticky
+  h2.sticky-header-active {
+    position: sticky;
+    top: 0;
+    background-color: var(--background-color);
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color);
   }
 
   h3 {
@@ -393,7 +547,7 @@ watch(() => route.params.id, () => {
   pre {
     background: var(--code-bg);
     padding: 2rem;
-    border-radius: 4px;
+    border-radius: 8px;
     font-family: @font-mono;
     font-size: 0.8rem;
     margin: 3rem 0;
@@ -452,17 +606,44 @@ watch(() => route.params.id, () => {
     display: block;
     margin: 2rem 0;
     border-radius: 4px;
+    // Override global vw-based width
+    width: 100%;
+    position: static;
+    left: auto;
+    transform: none;
+  }
+
+  .video-container {
+    width: 100%;
+    max-width: 100%;
+    position: static;
+    left: auto;
+    transform: none;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    background: var(--background-color-secondary);
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
   }
 
   .full-bleed {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    max-width: none;
-    border-radius: 0;
+    // Full width within the content area (no longer viewport-based due to sidebar)
+    width: 100%;
+    max-width: 100%;
+    position: static;
+    left: auto;
+    right: auto;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 4px;
   }
 
   mark {

@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: Vue, TypeScript, MediaPipe, WebRTC, Biofeedback, Machine Learning, Web Speech API, Software
+TAGS: Vue, TypeScript, MediaPipe, WebRTC, Biofeedback, Machine Learning, Web Speech API, Software, Biology, Wellness
 YEAR: 2025
 HOVER_VIDEO: /video/gaze.mov
 PRIORITY: 8
@@ -63,12 +63,12 @@ The vision system is built on **Google's MediaPipe Face Mesh**, which provides 4
 
 The application organizes detection into specialized **Regions**:
 
-| Region           | What It Tracks                  | Signals Produced                            |
-| :--------------- | :------------------------------ | :------------------------------------------ |
-| **EyesRegion**   | Landmarks around eyes           | `eyeOpenness`, `blink` events, `isDrooping` |
-| **HeadRegion**   | 3D head pose (pitch, yaw, roll) | `isStable`, `nod`, `turn`, `headDrop`       |
-| **MouthRegion**  | Lip landmarks                   | `mouthOpenness`, `isRelaxed`, `tongueOut`   |
-| **BreathRegion** | Fused facial signals            | `breathSignal`, `breathRate`                |
+| Region           | What It Tracks                  | Signals Produced                          |
+| :--------------- | :------------------------------ | :---------------------------------------- |
+| **EyesRegion**   | Landmarks around eyes           | `eyeOpenness`, `blink`, `isDrooping`      |
+| **HeadRegion**   | 3D head pose (pitch, yaw, roll) | `isStable`, `nod`, `turn`, `headDrop`     |
+| **MouthRegion**  | Lip landmarks                   | `mouthOpenness`, `isRelaxed`, `tongueOut` |
+| **BreathRegion** | Fused facial signals            | `breathSignal`, `breathRate`              |
 
 ### Eye Aspect Ratio
 

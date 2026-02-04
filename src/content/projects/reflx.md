@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: Hardware, Software, Product Design, Startup, ElectronJS, React Native, AWS, IoT
+TAGS: Hardware, Software, Product Design, Startup, ElectronJS, React Native, AWS, IoT, Film & Video
 YEAR: 2017-2021
 HOVER_VIDEO: /video/aura.mp4
 PRIORITY: 1

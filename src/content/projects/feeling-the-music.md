@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: Product Design, Digital Signal Processing, Circuit Design, Raspberry Pi, Hardware, Experiential
+TAGS: Product Design, Digital Signal Processing, Circuit Design, Raspberry Pi, Hardware, Experiential, Biology, Wellness
 YEAR: 2017
 PRIORITY: 10
 

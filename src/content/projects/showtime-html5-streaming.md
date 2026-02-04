@@ -1,5 +1,5 @@
 FEATURED: true
-TAGS: JavaScript, Backbone/Marionette, DRM, HTML5 Video, Shaka Player, Flash Migration, Software
+TAGS: JavaScript, Backbone/Marionette, DRM, HTML5 Video, Shaka Player, Flash Migration, Software, Film & Video
 YEAR: 2014-2017
 HOVER_VIDEO: /video/showtime.mp4
 PRIORITY: 4
