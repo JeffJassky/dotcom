@@ -1,88 +1,171 @@
 FEATURED: true
-TAGS: Kickstarter, Mechanical, Electrical & Software Engineering, 3D Printing & Design, MIDI Music Software
+TAGS: Kickstarter, Robotics, MIDI, 3D Printing, Arduino, Hardware, Music
 YEAR: 2014
 HOVER_VIDEO: /video/brobot.mp4
 
-# **Building a Robotic Drummer**
+![Brobot drum mechanism close-up](/img/IMG_6414.jpg)
 
-### _2014_
+# **Our Drummer Was Too Flaky, So We Built a Robot**
 
-The project was a midi controlled robotic drum kit designed to sound as natural as reasonably possible given the budget constraints. The hardware and electrical system needed to be reliable enough for the setup/tear down nature of a professional music tour. The midi software was written in C and Javascript. The electrical system consisted of several power supplies, solenoids, XLR power/signal cables, Arduino, and a custom circuit board with a variety of mosfets, resistors and diodes. Physical hardware, mostly steel and ABS plastic, is mostly 3D printed  and cut on a CNC machine.
+### Brobot (2014)
 
-[**Download the code**](https://github.com/JeffJassky/Brobot)
+"We have dealt with some drummers in the past that were a little difficult to work with. They're so flaky, they never show up. Brobot? Far more reliable."
 
-Read more ↓
+We built a MIDI-controlled robotic drum kit for our band Pole Shadow, funded it on Kickstarter, got featured on the news, and installed it in a storefront window where strangers could play it with a Super Nintendo controller from the sidewalk.
 
----
-
-# Design
-
-After many design iterations I settled on a combination of 3D printed and CNC machined parts out of ABS. A variety of ball bearings, thumb screws for adjustments, and steel tooth clamps for mounting to drum rims.
-
-[View fullsize](https://images.squarespace-cdn.com/content/v1/55a81958e4b0d74f5deeeb66/1511863691667-QGKP34H1DGQ04DMZ6OVT/IMG_6414.jpg)
-
-![IMG_6414.jpg](/img/IMG_6414.jpg)
-
-[View fullsize](https://images.squarespace-cdn.com/content/v1/55a81958e4b0d74f5deeeb66/1511863691985-K5QWPWOHHB9TMOXRLQMT/IMG_6423.jpg)
-
-![IMG_6423.jpg](/img/IMG_6423.jpg)
-
-[View fullsize](https://images.squarespace-cdn.com/content/v1/55a81958e4b0d74f5deeeb66/1511863699069-YO9B4QD1EI9CJXBQLUMA/IMG_6426.jpg)
-
-![IMG_6426.jpg](/img/IMG_6426.jpg)
+→ [Kickstarter Campaign](https://www.kickstarter.com/projects/poleshadow/brobot-open-source-robotic-drummer-sci-fi-fantasy) · [View the code on GitHub](https://github.com/JeffJassky/Brobot)
 
 ---
 
-# Software
+## The Backstory (The Fake One)
 
-Due to the configuration of the hardware sometimes solenoids would be mounted vertically, horizontally, or at weird random angles. This meant that the force of gravity was working on each drum stick and solenoid at a different angle. This caused some instruments to be delayed more than others. Not all of the percussion pieces were playing in sync. To make it worse the delay variable would change depending on how hard each solenoid was hitting. Though it sounded chaotic, it was a simple mathematics problem. I wrote a simple midi plugin that applied a very simple pre-delay function curve to each solenoid depending on the input velocity. This put everything perfectly in sync.
+For Kickstarter, we created an elaborate sci-fi mythology:
 
-![Screen Shot 2017-11-28 at 4.20.24 AM.png](/img/Screen+Shot+2017-11-28+at+4.20.24+AM.png)
+> *"We are known as Pole Shadow, and we come from the future. During our last rematerialization in our time machine, we had a little accident. Brobot here didn't fully make it. He's only a three-piece drum set now."*
 
----
+The campaign was picked as a **Kickstarter Staff Pick** and featured on their official blog. Local news picked it up too. People connected with the story of a band trying to rebuild their injured robot friend.
 
-# Electrical
+<div class="video-container">
+  <iframe src="https://www.youtube.com/embed/x2ONfXU2eVo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
-### Mosfet / Solenoid
-
-The Mosfet and solenoid did not cause much trouble to be honest. That is until mysteriously, after several minutes of playing, sometimes a mosfet would fry open, clamping the solenoid down at full power until we unplug the entire system to analyze what happened. This happened several times. The first several times we thought it might be a fluke or a bad solder. It wasn't until coming across an article about reverse transient voltage where the problem became clear.
-
-When current is removed from a solenoid, the magnetic field collapses, sending a pulse of electrically backwards through the power wires. Since the power wires ran directly from the solenoid to the mosfet the mosfet was receiving all of that power in reverse which was causing the chip to overheat and fry. A simple correctly sized diode was put in place between the mosfet and solenoid which prevented reverse transient voltage from reaching the mosfet. Now they would run for hours and stay cool.
-
-### Sizing the power supply
-
-Another issue was the power consumption. Each drum, cymbal, or percussion instrument had its own drum stick and each drum stick had its own solenoid to control it. With a kick, snare, toms, ride, crash, hats, and aux gear that's possibly up to 10 solenoids. Each solenoid, when engaged, can pull up to 5 amps. We noticed that during playback if multiple instruments were triggered simultaneously the current would spike and the voltage would drop. Our power supply was undersized. Eventually we ended up with a 24v 40 amp power supply.
-
-![](/img/image-asset.jpeg)
+<div class="video-container">
+  <iframe src="https://www.youtube.com/embed/Q1x29ApfRPA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ---
 
-# Hardware
+## The Backstory (The Real One)
 
-### The Down Stroke
+Human drummers are unreliable. They don't show up to practice. They have opinions. They take up space in the van.
 
-When creating a robotic musician the musical dynamics are key. Being to tone, velocity, sound, volume, etc. That means that control is really the key. We experimented with a number of different control systems. Pneumatics, servos, stepper motors and solenoids. Pneumatics are loud. Servos are weak. Stepper motors are electrically complex and inefficient. We ended up settling on solenoids which act as linear actuators.
-
-Solenoids are great at a few things. When paired with a mosfet, pulse width modulation, which is then modulated over time you have a very simple electrical system. A solenoid (shown in Figure A.) is an incredibly simple mechanism with only a single moving part - a solid steel plunger that moves linearly to the left when the surrounding coil is electrified (the down stroke)
-
-### The Up Stroke
-
-When the electrical current is removed the spring around the plunger returns the plunger to its resting state (the up stroke). One problem with the spring is that it's not easily adjustable or tunable. Another problem is that as the solenoid heats up (which it does after several minutes of use) the spring gets weaker.
-
-I experimented with a variety of different return mechanisms. Springs over the coil, springs outside the coil, and bands of rubber, silicone, latex. I ended up finding a material called Rep Band that had a perfect amount of adjustability, strength, and did not change tension in different temperature conditions.
-
-These result is a reliable, quiet, controllable, powerful, mechanism for repeat impacts with very few moving parts.
-
-Figure A.
-
-[Figure A.](https://images.squarespace-cdn.com/content/v1/55a81958e4b0d74f5deeeb66/1511747183397-RHS3LO7I5Y40CEDX0CAZ/Figu)
+We wanted a drummer who would play exactly what we programmed, never miss a show, and fit in a few road cases. So we built one.
 
 ---
 
-![](https://scontent-iad3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/14350522_1208426875855507_1898477808_n.jpg)
+## The Build
 
-[New #robotic #drum set #interactive #installation @drtysmmr 1198 Myrtle Ave #bushwick #newyork #nyc. Come #play with it from outside using a #custom #programmed Super #Nintendo controller.](https://scontent-iad3-1.cdninstagram.com/t51.2885-15/e35/14350522_1208426875855507_1898477808_n.jpg)
+Once the Kickstarter funded and Fat Cat Fab Lab was fully operational, the real work began. Four months of:
 
-48 Likes, 2 Comments - 🗽 NYC Maker 🔧 (@jeffjassky) on Instagram: "New #robotic #drum set #interactive #installation @drtysmmr 1198 Myrtle Ave #bushwick #newyork..."
+- Designing parts in Fusion 360
+- 3D printing prototypes
+- Testing until they broke
+- Redesigning
+- Ordering new components
+- Trying new mechanisms
 
-[\*\*Facebook](http://www.facebook.com/jeffjassky)      [Instagram](http://www.instagram.com/jeffjassky)     [GitHub](http://www.github.com/jeffjassky)     [LinkedIn](https://www.linkedin.com/in/jassky)\*\*
+![3D printed solenoid mount](/img/IMG_6423.jpg)
+
+![Drum stick mechanism](/img/IMG_6426.jpg)
+
+The final system: solenoid actuators driving real drum sticks, hitting real drums. Each solenoid controlled by an Arduino, orchestrated by MIDI software I wrote in C and JavaScript. A 24V 40-amp power supply feeding the whole thing through custom circuit boards.
+
+---
+
+## The MOSFET Mystery
+
+About four or five MOSFETs into the project, we had a problem.
+
+Everything would work fine for several minutes. Then, mysteriously, a MOSFET would fry open - clamping the solenoid down at full power until we killed the whole system. We'd check the solder joints, replace the component, and it would happen again.
+
+I was stuck. But I wasn't working alone - I was building this at Fat Cat Fab Lab, surrounded by people who knew things I didn't.
+
+I described the problem to friends at the space. They immediately knew: **reverse transient voltage**. When you cut current to a solenoid, the magnetic field collapses and sends a voltage spike backwards through the wire. That spike was frying the MOSFETs.
+
+The fix was a correctly-sized flyback diode between the MOSFET and solenoid. One Digi-Key order later, the problem was solved forever. The MOSFETs now run for hours and stay cool.
+
+![The electrical system - power supply and wiring](/img/image-asset.jpeg)
+
+This is why makerspaces matter.
+
+---
+
+## The Timing Problem
+
+Here's the thing about robotic drums: every mechanism has its own latency.
+
+Solenoids mounted vertically behave differently than ones mounted horizontally - gravity pulls differently. Different drum sticks have different weights. Different drum heads bounce differently. And the delay changes based on how hard you're hitting.
+
+The result: nothing played in sync. A snare hit and a kick hit triggered at the same moment would land at different times.
+
+I could have tried to model the physics - magnetic field strength, material properties, spring constants, gravitational vectors. Instead, I wrote a simple MIDI plugin that applied **velocity-dependent delay curves** to each solenoid.
+
+Hit soft? Add X milliseconds of pre-delay. Hit hard? Add Y milliseconds. Each drum got its own curve, calibrated by ear until everything locked in.
+
+Simple math instead of complex physics. And it worked perfectly.
+
+![MIDI latency compensation interface](/img/Screen+Shot+2017-11-28+at+4.20.24+AM.png)
+
+---
+
+## The Result
+
+Brobot sounds completely natural. And fast as hell.
+
+Here's Peter Hartmann - the jazz musician/engineer from Fat Cat Fab Lab - playing Radiohead's "Black Star" on guitar while Brobot handles the drums:
+
+<iframe src="https://www.instagram.com/p/BJPQC8Sj4hk/embed" width="400" height="480" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+
+Brobot shredding a complex pattern:
+
+<iframe src="https://www.instagram.com/p/BHSUNj7jTe0/embed" width="400" height="480" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+
+And here's double bass kick metal speed:
+
+<iframe src="https://www.instagram.com/p/BHARIYGG1wR/embed" width="400" height="480" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+
+---
+
+## The Window Installation
+
+For almost eight years, I lived in an art space called DRTY SMMR in Bushwick, Brooklyn - the same space where I built the Reflx mirror prototype. At one point, we installed Brobot in the storefront window.
+
+A "PLAY WITH ME" sign. A Super Nintendo controller sitting on the window ledge outside, connected with a 20-foot USB extension cable. Passersby could walk up and trigger the drums from the sidewalk.
+
+![Brobot installed at DRTY SMMR with "Play with me" sign](/img/brobot-drty-smmr.png)
+
+---
+
+## On the Road
+
+Brobot was designed for setup and teardown - reliable enough to travel.
+
+We played shows around the area and took Brobot to **FORM Arcosanti** - a music festival at the experimental architecture site in Arizona. Load in, set up, perform, tear down, load out. The robot handled it.
+
+---
+
+## Where Brobot Lives Now
+
+Brobot still exists. It's currently at my sister's house in Arizona - she was also in the band.
+
+I'd love to bring Brobot back around someday. Set it up for people to play with, or just as a demonstration of what's possible when you're tired of flaky drummers.
+
+---
+
+## What I Learned
+
+**Community solves problems you can't.** The MOSFET issue would have taken me weeks to figure out alone. At the makerspace, it took one conversation. Building in community isn't just more fun - it's faster.
+
+**Simple solutions beat complex ones.** I could have modeled solenoid physics. Instead, I wrote delay curves. The elegant solution isn't always the sophisticated one.
+
+**Elaborate stories get attention.** The time-traveling robot backstory got us a Kickstarter Staff Pick and news coverage. The technology was cool, but the narrative made people care.
+
+**Robots are more reliable than drummers.** This one's just true.
+
+---
+
+## Technical Details
+
+**Actuation:** Solenoid linear actuators with Rep Band return mechanism
+
+**Control:** Arduino with custom MOSFET driver boards, flyback diodes for transient protection
+
+**Power:** 24V 40A power supply
+
+**Software:** MIDI processing in C/JavaScript, velocity-dependent latency compensation
+
+**Fabrication:** 3D printed (ABS) and CNC machined parts, Fusion 360 design
+
+**Shows:** Local venues, FORM Arcosanti (Arizona)
+
+**Status:** Still functional, currently in Arizona

@@ -1,92 +1,179 @@
 FEATURED: true
-TAGS: NodeJS, Python, Vue.JS, OpenCV
+TAGS: NodeJS, Python, Vue.JS, OpenCV, AWS, Computer Vision, SaaS
 YEAR: 2020-2021
 HOVER_VIDEO: /video/storyfolder.mp4
 
-![Screen Shot 2020-11-20 at 2.37.29 PM.png](/img/Screen+Shot+2020-11-20+at+2.37.29+PM.png)
+![StoryFolder interface showing scene breakdown](/img/Screen+Shot+2020-11-20+at+2.37.29+PM.png)
 
-# **Reverse-Engineering Stories From TV and Movies with Software**Launching a SAAS Product in 48 hours
+# **From Weekend Hack to Hollywood Tool**
 
-From ideation to market research, development, deployment, and feedback follow the launch of a new software tool for storytellers.
+### StoryFolder (2020–2021)
 
-### 2020 - Try StoryFolder at [StoryFolder.com](https://storyfolder.com/)
+I needed to storyboard a Kickstarter video for Aura Mirrors. By the time I finished my coffee, I'd written a script that would eventually be used by Apple, Netflix, HBO, and Sony.
 
----
-
-# Update: 2021
-
-Since originally publishing in 2020, StoryFolder has grown from a simple, free service into a complex suite of video and film analysis tools used daily by companies like Apple, Netflix, HBO and Sony.
-
-[**see where storyfolder is now**](https://storyfolder.com/)
+→ [Try StoryFolder](https://storyfolder.com)
 
 ---
 
-# The Idea
+## The Problem Over Breakfast
 
-Tasked with producing a Kickstarter video for [Aura Mirrors](https://auramirrors.com/) I visited a coffee shop to start storyboarding over breakfast. Friends of mine at [Wazer](https://www.wazer.com/) had successfully [raised over $1M on Kickstarter](https://www.kickstarter.com/projects/1294137530/the-first-desktop-waterjet-cutter) launching their desktop water jet cutter and their Kickstarter video hit the tone and format that I wanted for the Aura Mirrors launch. I wanted to base my storyboard on their video.
+I was at a coffee shop trying to storyboard a Kickstarter video. My friends at Wazer had raised over $1M with their desktop waterjet cutter campaign, and their video had exactly the tone I wanted for Aura Mirrors. I needed to study it - break it down shot by shot, understand the rhythm, the pacing, the visual language.
 
-Storyboarding is usually a tedious task that requires drawing talent or other very time consuming techniques. Drinking my coffee I wondered - could I write code to automatically generate a storyboard from an MP4 video file?
+Storyboarding by hand is tedious. You're scrubbing through video, pausing, sketching or screenshotting, annotating, organizing. It takes hours to deconstruct a three-minute video.
 
-![Screen Shot 2020-11-22 at 8.10.49 PM.png](/img/Screen+Shot+2020-11-22+at+8.10.49+PM.png)
+Sitting there with my coffee, I had a thought: every cut in a video is just a sudden change in pixel values between frames. Motion detection algorithms have been doing this for years. Could I use the same technique to automatically find every edit point and extract a frame from each shot?
 
-# The Prototype
+I went home and wrote the prototype in twenty minutes.
 
-![Screen Shot 2020-11-22 at 8.21.50 PM.png](https://images.squarespace-cdn.com/content/v1/55a81958e4b0d74f5deeeb66/1606094531245-A290GYKODAYP3GSIXJBD/Screen+Shot+2020-11-22+at+8.21.50+PM.png)
+---
 
-It’s known that one can [easily detect motion in videos](https://www.pyimagesearch.com/2015/05/25/basic-motion-detection-and-tracking-with-python-and-opencv/) by stepping through frame-by-frame and comparing pixel values of each frame using Python and OpenCV. I figured the same technique could be used to detect cuts and edits in any video.
+## The Technical Approach
 
-I went home, prototyped some code in about 20 minutes and had the entire Wazer Kickstarter video split up into its individual shots. After a few more minutes the script was extracting a still image from each shot and put them in an HTML page that was easy to print.
+The core insight was simple: video editing creates discontinuities. When a director cuts from one shot to another, the visual content changes dramatically between adjacent frames. This shows up as a spike in frame-to-frame difference.
 
-# First Users
+### Scene Detection
 
-![Screen Shot 2020-11-22 at 8.14.48 PM copy.png](/img/Screen+Shot+2020-11-22+at+8.14.48+PM+copy.png)
+Using Python and OpenCV, the algorithm:
 
-I knew the tool did what I wanted - but who else might want something like this? Maybe film students or professors who wanted to creatively analyze iconic film scenes or content producers could use it to to find creative inspiration or use it to create starting points for their own videos.
+1. **Reads frames sequentially** from the video file
+2. **Computes frame differences** using pixel-wise comparison
+3. **Detects cut points** where the difference exceeds a threshold
+4. **Extracts representative frames** from each detected scene
+5. **Generates a visual storyboard** with timing information
 
-I decided to join several Facebook Groups of indie film makers and posted the idea to get feedback. The next morning I woke up to hundreds of replies of people wanting to try it and within a week there were over 600.
+The tricky part wasn't detecting hard cuts - those are obvious. The challenge was handling:
 
-# The MVP
+- **Fade transitions** - Gradual changes that don't spike the same way
+- **Flash frames** - Brief white or black frames used for impact
+- **Similar consecutive shots** - Same location, different angle
+- **Motion blur** - Fast camera movement that looks like scene changes
 
-![Screen Shot 2020-11-22 at 8.31.08 PM.png](/img/Screen+Shot+2020-11-22+at+8.31.08+PM.png)
+Each of these required tuning. Fades needed a different detection window. Flash frames needed to be filtered. Similar shots needed content-aware comparison, not just pixel difference.
 
-I have a tendency to over-engineer things and wanted to avoid that this time. Simplifying requirements would help reduce surface area for bugs, simplify testing, minimize edge cases and manage users expectations. **MP4 files only, 50MB or less, and one single button.** No user accounts, no paywall, just one button that converts an MP4 file into storyboard assets.
+```python
+# Simplified core logic
+def detect_scenes(video_path, threshold=30):
+    cap = cv2.VideoCapture(video_path)
+    prev_frame = None
+    scenes = []
 
-The interface was one button labeled "Select MP4 file". Once selected, the file gets sent to the API, crunched in OpenCV where the images and HTML would be generated, zipped, and delivered back to the user. The front end and API were spun up in a few hours using Vue, Express, NodeJS, and pushed to a private Github repo.
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-# Scalable Deployment
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-Skip to next section (**Fast Feedback)** to avoid this section of technobabble.
+        if prev_frame is not None:
+            diff = cv2.absdiff(prev_frame, gray)
+            score = np.mean(diff)
 
-Analyzing video with OpenCV is processor intensive work. I knew if too many people used it at the same time the server would become slow, unresponsive, or even crash. Luckily, I had just gone through several weeks of learning and integrating CI/CD pipelines using Github actions, Docker and AWS for Aura Mirrors web application - so I knew how deploy on systems that would automatically scale based on usage.
+            if score > threshold:
+                scenes.append(current_frame_num)
 
-The code gets written on my laptop, pushed to Github where actions would build my Dockerfile and store the image on AWS ECR, then deploy the image as containers on ECS. I also set up an AWS S3 bucket to store video files and generated storyboard images.
+        prev_frame = gray
+```
 
-![Product-Page-Diagram_Amazon-ECR.bf2e7a03447ed3aba97a70e5f4aead46a5e04547.png](/img/Product-Page-Diagram_Amazon-ECR.bf2e7a03447ed3aba97a70e5f4aead46a5e04547.png)
+The real implementation was more sophisticated - histogram comparison, edge detection, temporal smoothing - but this captures the core idea.
 
-# Fast Feedback
+---
 
-I didn't know how what the response would be. Frankly - I still have no idea. It only launched a day ago. Combine that with the code being new and likely riddled with bugs, I needed a way for users to easily share feedback on how the tool was (or wasn't) working for them. Equally as important I wanted to know if users could see themselves paying for this tool in the future, have a simple way to collect email addresses for a product newsletter and ask for donations since server resources aren't cheap.
+## Validation in 24 Hours
 
-I landed on using a Facebook ChatBot. ChatBots act kind of like automated phone systems - Menus with options, questions that users can navigate - except over chat. Considering my first users would be coming from Facebook Groups already I figured it would be easy for them to provide feedback over Facebook Messenger. It would also be faster than integrating separate services like Survey Monkey and MailChimp.
+I had a working prototype, but I had no idea if anyone else wanted this. Before building anything more, I needed to find out.
 
-After researching the popular ChatBot services and landed on ManyChat as it supported user surveys, lead generation, and some other cool integrations.
+I joined several Facebook groups for indie filmmakers and posted a simple question: "I built a tool that automatically generates storyboards from video files. Anyone want to try it?"
 
-![Screen Shot 2020-11-22 at 8.34.19 PM.png](/img/Screen+Shot+2020-11-22+at+8.34.19+PM.png)
+I went to bed.
 
-# What next?
+The next morning: hundreds of replies. Within a week, over 600 people had asked to try it.
 
-The interest has been enough to qualify development of a paid version with more developed features. It’s currently in the works and has a slew of other features to help video makers get the most out of their inspiration material.
+That was the signal. People didn't just think it was interesting - they wanted to use it immediately. The problem I'd solved for myself was a problem lots of other people had.
 
-One very kind, thoughtful, and thorough user has been testing a variety of videos, analyzing the results and and sharing the details with me. With his help I've already released some improvements.
+---
 
-### Do I consider the launch to be a success?
+## The MVP
 
-Commercially, it’s far too early to tell. I still have a lot of market testing and validation to do. Personally I’ve never launched a product to a group of users this fast before - so it’s a big win in that respect. This experience is exactly what I needed to internalize the value of the “launch early” and “fail fast”, ideas commonly touted in the startup communities.
+I have a tendency to over-engineer. This time I forced myself to ship the simplest possible thing:
 
-### New features and releases?
+- **One file type:** MP4 only
+- **One size limit:** 50MB maximum
+- **One button:** "Select MP4 file"
+- **No accounts:** No signup, no login
+- **No paywall:** Completely free
 
-Most likely I’ll be updating the product in the weeks to come and this section will quickly become out of date. To get updates about the project you can sign up for the email list using the chatbot by clicking [here](https://m.me/103443441596656?ref=w13592812).
+The entire interface was a single button. Click it, select a video, wait, download your storyboard. Nothing else.
 
-[**StoryFolder.com**](https://storyfolder.com/original)
+The backend was Vue + Express + Node, deployed to AWS. When a user uploaded a video, it went to S3, got processed by OpenCV in a Docker container on ECS, and the resulting storyboard (images + HTML) got zipped and returned.
 
-[\*\*Facebook](http://www.facebook.com/jeffjassky)      [Instagram](http://www.instagram.com/jeffjassky)     [GitHub](http://www.github.com/jeffjassky)     [LinkedIn](https://www.linkedin.com/in/jassky)\*\*
+I built and deployed it in 48 hours.
+
+---
+
+## Scaling Challenges
+
+Video processing is computationally expensive. A three-minute video at 30fps is 5,400 frames to analyze. A feature film is over 100,000 frames. And the processing had to happen server-side because browser-based OpenCV wasn't viable in 2020.
+
+The architecture had to handle:
+
+- **CPU-intensive workloads** - Each video maxes out a core during processing
+- **Variable processing times** - A 30-second clip processes in seconds; a 2-hour film takes minutes
+- **Concurrent users** - Multiple uploads happening simultaneously
+- **Large file transfers** - Videos going up, storyboards coming down
+
+I set up auto-scaling on ECS - containers spun up when load increased, spun down when idle. S3 handled the storage. CloudFront cached the static assets. The system could handle spikes without me babysitting it.
+
+---
+
+## From Free Tool to Studio Product
+
+The free version proved the concept. But the feedback kept pointing toward more:
+
+- "Can it handle longer videos?"
+- "Can I get timecodes with each frame?"
+- "Can it detect different types of shots?"
+- "Can it export to my editing software?"
+
+I started building a paid tier. More features, larger file limits, batch processing, export formats for professional workflows.
+
+Then the emails started coming in. Not from indie filmmakers - from production companies. Post-production houses. Major studios.
+
+Within a year, StoryFolder was being used by teams at **Apple, Netflix, HBO, and Sony**. What started as a tool to help me storyboard a Kickstarter video was now part of professional film analysis workflows at the biggest content companies in the world.
+
+---
+
+## What Made It Work
+
+**The problem was real and specific.** I wasn't inventing a need - I had the need myself, and it turned out thousands of other people had it too. The Facebook post validated this in 24 hours, before I'd written a line of production code.
+
+**The MVP was truly minimal.** One button. One file type. One output. No accounts, no payment, no complexity. People could try it in ten seconds. If I'd built user accounts and payment processing first, I'd have spent weeks on infrastructure that didn't matter yet.
+
+**The 48-hour constraint was liberating.** I couldn't over-engineer because I didn't have time. Every feature request went into a list for later. The only question was: does this work?
+
+**Free users were the marketing.** Every person who used the free version and found it useful told other people. The Facebook groups became organic distribution. By the time I launched a paid version, there was already demand.
+
+---
+
+## What I Learned
+
+**Ship the smallest thing that works.** My instinct is always to build more, add features, handle edge cases. StoryFolder taught me that the smallest version often teaches you the most. Users will tell you what's missing.
+
+**Validation before infrastructure.** I could have spent weeks setting up the perfect CI/CD pipeline, user auth, payment processing. Instead I spent 20 minutes on a prototype and 24 hours finding out if anyone cared. The infrastructure came later, when it mattered.
+
+**Scratching your own itch scales.** The problems you have are usually problems other people have too. Solving your own problem authentically tends to resonate - because the solution comes from genuine need, not market research.
+
+**Technical elegance doesn't matter to users.** Nobody using StoryFolder cares about the OpenCV implementation or the AWS architecture. They care that they upload a video and get a storyboard. Everything else is invisible.
+
+---
+
+## Technical Details
+
+**Core Engine:** Python, OpenCV, NumPy - frame extraction, histogram analysis, scene boundary detection
+
+**Backend:** Node.js, Express, Docker containers on AWS ECS
+
+**Frontend:** Vue.js, single-page application
+
+**Infrastructure:** AWS (S3, ECS, ECR, CloudFront), GitHub Actions CI/CD
+
+**Processing:** Parallel frame analysis, adaptive threshold tuning, multiple transition type detection

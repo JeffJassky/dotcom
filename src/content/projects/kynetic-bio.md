@@ -9,7 +9,7 @@ HOVER_VIDEO: /video/kynetic.mov
 
 ### KyneticBio (2024–Present)
 
-I was three weeks into an ADHD protocol - light therapy, cold showers, supplements, high protein - and something wasn't working. The dopamine optimization was helping with focus, but my mood was crashing. I was irritable, stuck on negative thoughts, couldn't let things go.
+I was three weeks into an ADHD protocol - light therapy, cold plunges, supplements, high protein - and something was wrong. My mood was crashing. I was irritable, and ruminating on negative thoughts that I didn't usually have...
 
 I'd been researching obsessively (as ADHD brains do). Dopamine vs. serotonin. Seven types of ADHD. Tryptophan transport across the blood-brain barrier. Why very low-carb might tank your mood even when it fixes your cravings.
 
@@ -81,14 +81,14 @@ To achieve real-time performance in the browser, everything is flattened into a 
 
 The engine organizes 50+ signals into interconnected systems:
 
-| System | Key Signals |
-| :-- | :-- |
-| **Nervous** | Dopamine, Serotonin, GABA, Glutamate, Acetylcholine, Norepinephrine, BDNF, Histamine, Orexin |
-| **Endocrine** | Cortisol, Adrenaline, Melatonin, Growth Hormone, Oxytocin, Thyroid |
-| **Metabolic** | Glucose, Insulin, Glucagon, Ketones, GLP-1, Leptin, Ghrelin, mTOR, AMPK |
-| **Reproductive** | Testosterone, Estrogen, Progesterone, LH, FSH |
-| **Cardiovascular** | Blood Pressure, HRV, Vagal Tone |
-| **Nutritional** | Magnesium, Vitamin D3, Zinc, B12, Folate, Iron, Choline |
+| System             | Key Signals                                                                                  |
+| :----------------- | :------------------------------------------------------------------------------------------- |
+| **Nervous**        | Dopamine, Serotonin, GABA, Glutamate, Acetylcholine, Norepinephrine, BDNF, Histamine, Orexin |
+| **Endocrine**      | Cortisol, Adrenaline, Melatonin, Growth Hormone, Oxytocin, Thyroid                           |
+| **Metabolic**      | Glucose, Insulin, Glucagon, Ketones, GLP-1, Leptin, Ghrelin, mTOR, AMPK                      |
+| **Reproductive**   | Testosterone, Estrogen, Progesterone, LH, FSH                                                |
+| **Cardiovascular** | Blood Pressure, HRV, Vagal Tone                                                              |
+| **Nutritional**    | Magnesium, Vitamin D3, Zinc, B12, Folate, Iron, Choline                                      |
 
 ### Receptor Pharmacology
 

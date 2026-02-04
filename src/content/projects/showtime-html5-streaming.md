@@ -1,65 +1,177 @@
 FEATURED: true
-TAGS: Javascript Development, Backbone/Marionette, DRM Encrypted HTML5 Video
+TAGS: JavaScript, Backbone/Marionette, DRM, HTML5 Video, Shaka Player, Flash Migration
 YEAR: 2014-2017
+HOVER_VIDEO: /video/showtime.mp4
 
-![billions.jpeg](/img/billions.jpeg)
+![Billions on Showtime](/img/billions.jpeg)
 
-# **Showtime Anytime\***Migrating from Flash to HTML5\*
+# **Killing Flash Before Google Did**
 
-### 2014 - 2017
+### Showtime Anytime (2014–2017)
 
-### When one of the best TV networks meets the modern web browser
+When I joined Showtime in 2014, their entire streaming platform was built in Flash. Over three years, we rebuilt everything - the website, the video player, the DRM system - in native HTML5. Then that foundation let us launch the Mayweather vs McGregor PPV to 4.6 million viewers without breaking a sweat.
 
-The project was to rebuild the Flash website page-for-page in Javascript and HTML5. The Showtime Anytime website consisted of a Netflix style website built entirely in Adobe Flash and Actionscript. After launching the rebuild, the initial load time was improved more than 5 times. Switching between pages improved more than 10 times. The site was now built to modern standards, more testable, and more maintainable. We proved the internal development team was capable of a whole-scale rebuild in a short period of time.
-
-Marionette and Backbone were chosen for the Javascript foundation. Bower for our package management, Mocha and Chai for unit testing. LESS for our CSS pre-processing, ESLint for Javascript linting, and Gulp for building. The components we built include a registration funnel, user login, catalog browsing, viewing history, playlist management, dynamic promotions and account management. Project management software by Jira.
-
-[**Get Showtime**](http://showtime.com/)
+→ [Showtime](https://showtime.com/)
 
 ---
 
-When I started at Showtime Networks in 2014 I was brought on as a front end web developer to work on their existing streaming platform Showtime Anytime. Showtime Anytime consisted of a Netflix style website where you could log in, browse series and categories, and ultimately watch your favorite Showtime TV shows. The problem was the website was entirely Flash. An antiquated technology even then that desperately needed rebuilding. With my previous experience at Guruz Media, a video-heavy marketing company where we heavily employed HTML5 video it made sense for me to be a part of this team.
+## The Problem
 
-I spent the first month or two pouring through their existing code, databases, deployment systems, and other tech infrastructure to better understand the history of the new platform I'd be building. The databases were a mix of MongoDB and Postgres. The API was almost entirely written in Groovy (Java), and the front-end, the portion I'd be focusing on, was of course ActionScript.
+Showtime Anytime was a Netflix-style streaming service built entirely in Adobe Flash and ActionScript. In 2014, Flash was already dying - iOS had never supported it, Chrome was threatening deprecation, and the writing was on the wall.
 
-With this knowledge in hand my coworker Gautham Chandra and I started prototyping mock ups of top-tier pages in various Javascript frameworks.We played with React, Angular, Backbone, Marionette, and others. Most of the website, aside from the registration and settings, was primarily read-only. There's not a lot of data input or user interaction. Mostly just catalog browsing. With that being considered we decided upon using Backbone and Marionette. These lack the data binding that React and Angular offer but provide better features for read-only platforms.
+But Showtime's entire streaming experience lived in Flash. The UI, the navigation, the catalog browsing, the video player, the DRM. Everything.
 
-Over the next several months Gautham and I rebuilt the Flash website page-for-page in Backbone and Marionette. We used Bower for our package management, Mocha and Chai for unit testing. LESS for our CSS pre-processing, ESLint for Javascript linting, and Gulp for building. The components we built include a registration funnel, user login, catalog browsing, viewing history, playlist management, dynamic promotions and account management. The video player itself was left as Flash due to the its offering a simplified method for DRM (Digital Rights Management) which I'll go in to detail in later.
-
-### The Final Product
-
-We launched the new HTML5 website with great success. The performance improvements were honestly shocking to the entire department. Initial load time was improved more than 5 times and switching between pages more than 10 times. We had also brought the website in to modern standards and made it more testable and maintainable. More importantly we proved to our parent organization, CBS, that our tech team was qualified and capable to tackle large-scale rebuilds with new product features. This would pave the way for for the next large project - the [Mayweather Vs McGregor fight Pay Per View service that we launched in 60 days](https://jeff-jassky.squarespace.com/mayweather-vs-mcgregor).
+I was brought on as a front-end developer with HTML5 video experience. The mandate was clear: rebuild the platform before Flash died completely.
 
 ---
 
-## Migrating from Flash video streaming to native HTML5 video streaming
+## Understanding the Existing System
 
-After we launched the HTML5 website the video player itself was still in Adobe Flash.
+I spent the first two months reading code. Not writing - reading.
 
-The problem came when Google announced that Adobe Flash would no longer be supported in Chrome. That meant that in just a few short months we would need to write a new, native video player that would play back videos securely without exposing our video files for direct download and piracy. Let me back up.
+The databases were a mix of MongoDB and Postgres. The API was written in Groovy (Java). The front-end was ActionScript. Deployment pipelines, authentication flows, content management, analytics integration - I traced through all of it.
 
-Adobe offered a simple product to help reduce pirating of our videos called PrimeTime. PrimeTime is just one of the many systems for Digital Rights Management. Digital Rights Management (DRM) is how iTunes, Netflix, Hulu, and other media distributers restrict you from sharing music and movies you purchased. The files will only play back if you're logged in to an account that has permission. That means even if you copy the file over to your cousins computer they'll only play if you log in with your Apple ID. The lack of Flash support and therefore PrimeTime support exposes our content to potential piracy.
+This wasn't wasted time. You can't rebuild something you don't understand. By the time I started writing code, I knew where the complexity actually lived and where the original developers had made trade-offs I'd need to respect or rethink.
 
-Apple, Microsoft, Google, and Adobe all have products competing in the DRM market. Fairplay, PlayReady, Widevine, and Primetime respectively. The market competition means that popular browsers (Mircosoft IE, Google Chrome, and Apple Safari) all have their own proprietary methods of playing encrypted content. When we were using a flash-based video player we only had to use Adobe Primetime. However since we were migrating away from Flash to native HTML5 this requires us to navigate DRM with each browser itself. Anyone wishing to stream content to a wide audience must implement each and every one of these individually.
+---
 
-Googles Shaka Player project which succeeds at making this easier for programmers. It works by abstracting the varying DRM requirements in to a single library that works in most browsers. Shaka also provides libraries for multiple language audio tracks, multiple language closed captioning, and video quality switching. I chose Google Shake Player after extensively testing our options.
+## Choosing a Framework
 
-I began writing the design code for the brand new skin provided by our design department. DRM servers were stood up and tested with the help of our operations team. Due to the freshness native browser DRM it's still very difficult to pull off. Each browser on every platform was thoroughly tested for playback. Desktops, laptops, tablets, iOS, Android, even Kindle was tested. Each platform, operating system, browser, and even browser version now had to be taken in to consideration.
+My coworker Gautham Chandra and I prototyped the same pages in multiple JavaScript frameworks: React, Angular, Backbone, Marionette.
 
-### The Final Product
+The decision came down to understanding what Showtime Anytime actually *was*. It wasn't a highly interactive application with complex state management. It was primarily a **read-only catalog browser**. Users logged in, browsed series, watched videos. Very little data input, very little user-generated state.
 
-The launch of the HTML5 Video player was a big deal. With Flash now gutted entirely from our repositories we had effectively rebuilt and relaunched the core of the Showtime  - the video player itself. DRM servers were stood up, the player was deployed to production. The new player works on iOS, Android, Chrome, Safari, Firefox, Microsoft Edge and even IE11. Showtime had successfully become one of the few big players in DRM encrypted HTML5 video content.
+React and Angular offered powerful data binding, but that power came with complexity we didn't need. Backbone and Marionette were simpler, lighter, and well-suited for read-heavy applications.
 
-[View fullsize](https://images.squarespace-cdn.com/content/v1/55a81958e4b0d74f5deeeb66/1511735755663-JQIELLCXL3WT5F0TW2L7/Screen+Shot+2017-11-26+at+5.28.25+PM.png)
+We chose Backbone/Marionette. It was the right tool for the actual problem, not the most impressive tool on paper.
 
-![Screen Shot 2017-11-26 at 5.28.25 PM.png](/img/Screen+Shot+2017-11-26+at+5.28.25+PM.png)
+---
 
-[View fullsize](https://images.squarespace-cdn.com/content/v1/55a81958e4b0d74f5deeeb66/1511735748338-I1FRIG4RRRJRL5NJ6APO/Screen+Shot+2017-11-26+at+5.25.20+PM.png)
+## The Rebuild
 
-![Screen Shot 2017-11-26 at 5.25.20 PM.png](/img/Screen+Shot+2017-11-26+at+5.25.20+PM.png)
+Over several months, we rebuilt the Flash website page-by-page:
 
-[View fullsize](https://images.squarespace-cdn.com/content/v1/55a81958e4b0d74f5deeeb66/1511735752589-E00YY7G6TRU2J3YFVRAH/Screen+Shot+2017-11-26+at+5.25.12+PM.png)
+- **Registration funnel** - New user signup and subscription flow
+- **Authentication** - Login, session management, device authorization
+- **Catalog browsing** - Series, episodes, categories, search
+- **Viewing history** - Continue watching, recently viewed
+- **Playlist management** - Watchlist, favorites
+- **Dynamic promotions** - Featured content, personalized recommendations
+- **Account management** - Billing, preferences, device management
 
-![Screen Shot 2017-11-26 at 5.25.12 PM.png](/img/Screen+Shot+2017-11-26+at+5.25.12+PM.png)
+The toolchain: Bower for package management, Gulp for builds, LESS for CSS preprocessing, Mocha and Chai for testing, ESLint for code quality.
 
-[\*\*Facebook](http://www.facebook.com/jeffjassky)      [Instagram](http://www.instagram.com/jeffjassky)     [GitHub](http://www.github.com/jeffjassky)     [LinkedIn](https://www.linkedin.com/in/jassky)\*\*
+We left one thing in Flash: the video player. DRM-encrypted video playback was still easier in Flash via Adobe Primetime. We'd get to that later.
+
+---
+
+## The Results
+
+The HTML5 rebuild launched to immediate, measurable improvement:
+
+- **Initial load time:** 5x faster
+- **Page navigation:** 10x faster
+- **Code maintainability:** Dramatically improved (testable, linted, modular)
+- **Mobile support:** Finally possible without Flash
+
+The performance gains were honestly shocking to the entire department. Flash had been hiding how slow everything was. The same content, the same features, the same design - just built properly - was an order of magnitude faster.
+
+More importantly, we'd proven to CBS (Showtime's parent company) that our team could execute a large-scale platform rebuild. That credibility would matter for what came next.
+
+---
+
+## Then Google Killed Flash
+
+We'd rebuilt the website, but the video player was still Flash. It worked, and Flash wasn't dead *yet*.
+
+Then Google announced that Chrome would drop Flash support entirely. Our video player would stop working in the world's most popular browser.
+
+The timeline was months, not years. We needed a native HTML5 video player with DRM support.
+
+---
+
+## The DRM Problem
+
+Here's why this was hard: **every browser vendor has their own proprietary DRM system.**
+
+- **Apple Safari:** FairPlay
+- **Google Chrome:** Widevine
+- **Microsoft Edge/IE:** PlayReady
+- **Firefox:** Widevine (but different implementation)
+
+When we used Flash, Adobe Primetime handled DRM for us - one system, works everywhere Flash worked. Without Flash, we needed to implement *each DRM system separately* for each browser.
+
+This is the dirty secret of streaming video on the web. There's no standard. Netflix, Hulu, HBO - everyone streaming premium content has to implement this matrix of proprietary encryption systems. Miss one, and your video doesn't play for that browser's users.
+
+---
+
+## Google Shaka Player
+
+After extensive testing, I chose Google's Shaka Player as our foundation. Shaka abstracts the DRM complexity into a single library that handles:
+
+- **Multi-DRM negotiation** - Automatically selects the right DRM for the current browser
+- **Adaptive bitrate streaming** - Quality adjusts to network conditions
+- **Multiple audio tracks** - Language selection
+- **Closed captioning** - Subtitle support
+- **Offline playback** - Download for later (where DRM allows)
+
+But Shaka is a foundation, not a finished product. I built our custom player on top of it:
+
+- **Custom UI skin** matching Showtime's design language
+- **Analytics integration** for playback metrics
+- **Error handling** for the countless ways video can fail
+- **Accessibility features** for screen readers and keyboard navigation
+
+---
+
+## Testing Everything
+
+Browser DRM was new and fragile. Every combination of platform, operating system, browser, and browser *version* could behave differently.
+
+We tested:
+
+- Desktop: Windows, Mac
+- Mobile: iOS, Android
+- Tablets: iPad, Android tablets, Kindle
+- Browsers: Chrome, Safari, Firefox, Edge, IE11
+- Each browser across multiple versions
+
+When something didn't work - and plenty didn't work initially - we had to determine whether the problem was our code, Shaka, the browser's DRM implementation, or the DRM license server. The debugging was archaeological.
+
+---
+
+## The Launch
+
+The HTML5 video player launched successfully. Flash was completely removed from the codebase. The player worked across every platform and browser we needed to support.
+
+Showtime had become one of the few major streaming services to fully migrate from Flash to HTML5 with cross-browser DRM. The technical capability we'd built - the video player, the DRM infrastructure, the streaming architecture - would prove essential the following year.
+
+When the Mayweather vs McGregor fight was announced and Showtime needed a PPV service that could handle millions of simultaneous viewers, we didn't have to build video streaming from scratch. We extended what was already battle-tested.
+
+---
+
+## What I Learned
+
+**Read before you write.** Two months understanding the existing system wasn't delay - it was investment. The rebuild went faster because I knew where the real complexity lived.
+
+**Choose tools for your actual problem.** React and Angular were more impressive on paper, but Backbone/Marionette was right for a read-heavy catalog browser. The best tool is the one that fits, not the one that's newest.
+
+**Standards don't exist where money is involved.** DRM on the web is a mess of competing proprietary systems because content owners don't trust open standards. Building for that reality means accepting complexity you can't engineer away.
+
+**Foundations enable future work.** The HTML5 rebuild wasn't just about replacing Flash - it created infrastructure that let us move fast when opportunities like the PPV service appeared.
+
+---
+
+## Technical Details
+
+**Frontend:** Backbone/Marionette, LESS, Gulp builds
+
+**Video:** Google Shaka Player, custom UI layer, adaptive bitrate streaming
+
+**DRM:** FairPlay (Safari), Widevine (Chrome/Firefox), PlayReady (Edge/IE)
+
+**Testing:** Mocha/Chai unit tests, cross-browser manual testing matrix
+
+**Infrastructure:** Groovy API, MongoDB/Postgres, CDN-distributed video
+
+**Timeline:** 3 years from Flash to full HTML5 with DRM video

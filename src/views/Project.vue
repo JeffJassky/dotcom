@@ -86,13 +86,15 @@ watch(() => route.params.id, loadProject)
     text-transform: none;
     letter-spacing: -0.05em;
     color: var(--text-title);
+	strong {
+    font-weight: 700;
+	}
   }
 
   h2 {
     font-size: 1.5rem;
     margin-top: 4rem;
     margin-bottom: 1.5rem;
-    border-top: 1px solid var(--border-color);
     padding-top: 1rem;
     font-family: @font-display;
     font-weight: 700;
@@ -193,7 +195,7 @@ watch(() => route.params.id, loadProject)
   hr {
     border: none;
     border-top: 1px solid var(--border-color);
-    margin: 6rem 0;
+    margin: 5rem 0;
   }
 }
 
