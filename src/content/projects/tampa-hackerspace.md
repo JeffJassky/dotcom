@@ -34,7 +34,9 @@ To raise the capital, we turned to Kickstarter. I led the campaign strategy and 
 > "Tampa Hackerspace is a place where the best and brightest want to be." — Mayor Bob Buckhorn, Tampa, FL
 
 <div class="video-container">
-  <iframe src="https://www.youtube.com/embed/xjwP6HEbK1Q" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <video controls playsinline preload="metadata">
+    <source src="https://v2.kickstarter.com/1770231590-aplJ9whAnkwmZQG8Y0z%2FEUhntaBPjIlUiOY9qKMu%2Bls%3D/projects/734312/video-323382-h264_high.mp4" type="video/mp4">
+  </video>
 </div>
 
 The campaign launched with a $10,000 goal. We promised to use every dollar for tools: a laser cutter, a delta 3D printer, soldering stations, bench power supplies, and eventually a CNC mill.
