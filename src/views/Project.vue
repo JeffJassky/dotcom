@@ -34,6 +34,12 @@ const loadProject = () => {
     const yearMatch = raw.match(/### _?(\d{4})_?/m)
     metadata.value.year = yearMatch ? yearMatch[1] : ''
 
+    // Strip metadata lines before rendering
+    raw = raw.split('\n').filter(line => {
+      const trimmed = line.trim()
+      return !trimmed.match(/^(FEATURED|TAGS|YEAR|HOVER_VIDEO|PRIORITY):/i)
+    }).join('\n')
+
     // Render remaining content
     content.value = md.render(raw)
   } else {
@@ -47,11 +53,6 @@ watch(() => route.params.id, loadProject)
 
 <template>
   <div class="project-page">
-    <nav class="project-nav technical">
-      <router-link to="/">&lt; BACK_TO_INDEX</router-link>
-      <span v-if="metadata.year">YEAR: {{ metadata.year }}</span>
-    </nav>
-
     <article class="post-content" v-html="content"></article>
 
     <div class="project-footer technical">
@@ -62,6 +63,10 @@ watch(() => route.params.id, loadProject)
 
 <style lang="less">
 @import "../assets/less/typography.less";
+
+.project-page{
+	margin-top: -5rem;
+}
 
 .project-nav {
   display: flex;
@@ -95,7 +100,6 @@ watch(() => route.params.id, loadProject)
     font-size: 1.5rem;
     margin-top: 4rem;
     margin-bottom: 1.5rem;
-    padding-top: 1rem;
     font-family: @font-display;
     font-weight: 700;
     color: var(--text-title);

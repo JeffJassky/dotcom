@@ -1,7 +1,8 @@
 FEATURED: true
-TAGS: NodeJS, Python, Vue.JS, OpenCV, AWS, Computer Vision, SaaS
+TAGS: NodeJS, Python, Vue.JS, OpenCV, AWS, Computer Vision, SaaS, Software
 YEAR: 2020-2021
 HOVER_VIDEO: /video/storyfolder.mp4
+PRIORITY: 7
 
 ![StoryFolder interface showing scene breakdown](/img/Screen+Shot+2020-11-20+at+2.37.29+PM.png)
 

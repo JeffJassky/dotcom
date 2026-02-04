@@ -2,6 +2,7 @@ FEATURED: true
 TAGS: Hardware, Software, Product Design, Startup, ElectronJS, React Native, AWS, IoT
 YEAR: 2017-2021
 HOVER_VIDEO: /video/aura.mp4
+PRIORITY: 1
 
 ![Reflx - Your social selfie mirror](/img/aura-reflx-branding.png)
 

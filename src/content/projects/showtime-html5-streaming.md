@@ -1,7 +1,8 @@
 FEATURED: true
-TAGS: JavaScript, Backbone/Marionette, DRM, HTML5 Video, Shaka Player, Flash Migration
+TAGS: JavaScript, Backbone/Marionette, DRM, HTML5 Video, Shaka Player, Flash Migration, Software
 YEAR: 2014-2017
 HOVER_VIDEO: /video/showtime.mp4
+PRIORITY: 4
 
 ![Billions on Showtime](/img/billions.jpeg)
 
@@ -39,7 +40,7 @@ This wasn't wasted time. You can't rebuild something you don't understand. By th
 
 My coworker Gautham Chandra and I prototyped the same pages in multiple JavaScript frameworks: React, Angular, Backbone, Marionette.
 
-The decision came down to understanding what Showtime Anytime actually *was*. It wasn't a highly interactive application with complex state management. It was primarily a **read-only catalog browser**. Users logged in, browsed series, watched videos. Very little data input, very little user-generated state.
+The decision came down to understanding what Showtime Anytime actually _was_. It wasn't a highly interactive application with complex state management. It was primarily a **read-only catalog browser**. Users logged in, browsed series, watched videos. Very little data input, very little user-generated state.
 
 React and Angular offered powerful data binding, but that power came with complexity we didn't need. Backbone and Marionette were simpler, lighter, and well-suited for read-heavy applications.
 
@@ -82,7 +83,7 @@ More importantly, we'd proven to CBS (Showtime's parent company) that our team c
 
 ## Then Google Killed Flash
 
-We'd rebuilt the website, but the video player was still Flash. It worked, and Flash wasn't dead *yet*.
+We'd rebuilt the website, but the video player was still Flash. It worked, and Flash wasn't dead _yet_.
 
 Then Google announced that Chrome would drop Flash support entirely. Our video player would stop working in the world's most popular browser.
 
@@ -99,7 +100,7 @@ Here's why this was hard: **every browser vendor has their own proprietary DRM s
 - **Microsoft Edge/IE:** PlayReady
 - **Firefox:** Widevine (but different implementation)
 
-When we used Flash, Adobe Primetime handled DRM for us - one system, works everywhere Flash worked. Without Flash, we needed to implement *each DRM system separately* for each browser.
+When we used Flash, Adobe Primetime handled DRM for us - one system, works everywhere Flash worked. Without Flash, we needed to implement _each DRM system separately_ for each browser.
 
 This is the dirty secret of streaming video on the web. There's no standard. Netflix, Hulu, HBO - everyone streaming premium content has to implement this matrix of proprietary encryption systems. Miss one, and your video doesn't play for that browser's users.
 
@@ -126,7 +127,7 @@ But Shaka is a foundation, not a finished product. I built our custom player on 
 
 ## Testing Everything
 
-Browser DRM was new and fragile. Every combination of platform, operating system, browser, and browser *version* could behave differently.
+Browser DRM was new and fragile. Every combination of platform, operating system, browser, and browser _version_ could behave differently.
 
 We tested:
 

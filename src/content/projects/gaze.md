@@ -1,7 +1,8 @@
 FEATURED: true
-TAGS: Vue, TypeScript, MediaPipe, WebRTC, Biofeedback, Machine Learning, Web Speech API
+TAGS: Vue, TypeScript, MediaPipe, WebRTC, Biofeedback, Machine Learning, Web Speech API, Software
 YEAR: 2025
 HOVER_VIDEO: /video/gaze.mov
+PRIORITY: 8
 
 # **Interactive Hypnosis Through Biofeedback**
 

@@ -29,33 +29,28 @@ header {
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 1rem;
 
-    .logo {
+  .logo {
+    font-size: 1rem;
 
-      font-size: 1rem;
+    font-weight: 800;
 
-      font-weight: 800;
+    a {
+      color: var(--text-title);
 
-      a {
+      text-decoration: none;
 
-        color: var(--text-title);
-
-        text-decoration: none;
-
-        &:hover { opacity: 0.7; }
-
+      &:hover {
+        opacity: 0.7;
       }
-
-      .role {
-
-        color: var(--text-muted);
-
-        font-weight: 400;
-
-      }
-
     }
 
+    .role {
+      color: var(--text-muted);
+
+      font-weight: 400;
+    }
   }
+}
 
 nav {
   display: flex;
@@ -128,7 +123,7 @@ article {
 
   img {
     display: block;
-    width: 100vw;
+    width: 92vw;
     max-width: 1000px;
     position: relative;
     left: 50%;

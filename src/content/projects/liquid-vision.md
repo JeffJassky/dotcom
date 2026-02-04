@@ -1,6 +1,7 @@
 FEATURED: true
-TAGS: Product Design, Prototyping, Laser Cutting, CNC, Wearable Art
+TAGS: Product Design, Prototyping, Laser Cutting, CNC, Wearable Art, Hardware
 YEAR: 2015
+PRIORITY: 12
 
 ![Liquid Vision glasses in motion](/img/giphy-downsized-large.gif)
 
@@ -60,7 +61,7 @@ Trade-off accepted. They were art pieces, not daily drivers.
 
 Here's something I didn't anticipate: liquid sandwiched between two clear lenses, with sunlight filtering through, creates almost perfect laboratory conditions for bacterial growth.
 
-One of my early prototypes went bad. I picked it up one day and it looked *literally like a petri dish* - cloudy, with visible colonies growing in the liquid. The water, dye, and mineral oil mixture was basically a buffet for microorganisms.
+One of my early prototypes went bad. I picked it up one day and it looked _literally like a petri dish_ - cloudy, with visible colonies growing in the liquid. The water, dye, and mineral oil mixture was basically a buffet for microorganisms.
 
 I had accidentally built a wearable bacteria incubator.
 

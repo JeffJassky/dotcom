@@ -1,7 +1,8 @@
 FEATURED: true
-TAGS: Kickstarter, Robotics, MIDI, 3D Printing, Arduino, Hardware, Music
+TAGS: Kickstarter, Robotics, MIDI, 3D Printing, Arduino, Hardware, Music, Software
 YEAR: 2014
 HOVER_VIDEO: /video/brobot.mp4
+PRIORITY: 5
 
 ![Brobot drum mechanism close-up](/img/IMG_6414.jpg)
 
@@ -21,7 +22,7 @@ We built a MIDI-controlled robotic drum kit for our band Pole Shadow, funded it 
 
 For Kickstarter, we created an elaborate sci-fi mythology:
 
-> *"We are known as Pole Shadow, and we come from the future. During our last rematerialization in our time machine, we had a little accident. Brobot here didn't fully make it. He's only a three-piece drum set now."*
+> _"We are known as Pole Shadow, and we come from the future. During our last rematerialization in our time machine, we had a little accident. Brobot here didn't fully make it. He's only a three-piece drum set now."_
 
 The campaign was picked as a **Kickstarter Staff Pick** and featured on their official blog. Local news picked it up too. People connected with the story of a band trying to rebuild their injured robot friend.
 

@@ -2,6 +2,7 @@ FEATURED: true
 TAGS: Community Building, Makerspace, Business Operations, Nonprofit, West Village
 YEAR: 2014-Present
 HOVER_VIDEO: /video/fcfl.mp4
+PRIORITY: 11
 
 ![Fat Cat Fab Lab 3D printing station](/img/fcfl-3d-printers.jpg)
 

@@ -1,7 +1,8 @@
 FEATURED: true
-TAGS: Experiential Marketing, Game Design, NodeJS, Raspberry Pi, Arduino, Laser Cutting
+TAGS: Experiential Marketing, Game Design, NodeJS, Raspberry Pi, Arduino, Laser Cutting, Hardware, Software
 YEAR: 2016
 HOVER_VIDEO: /video/aliens-attack.mp4
+PRIORITY: 3
 
 ![Aliens Attack arcade game at Fat Cat Fab Lab](/img/MVI_7736-1.jpg)
 

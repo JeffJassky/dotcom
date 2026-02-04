@@ -1,6 +1,7 @@
 FEATURED: true
 TAGS: Product Design, Digital Signal Processing, Circuit Design, Raspberry Pi, Hardware, Experiential
 YEAR: 2017
+PRIORITY: 10
 
 ![Inscape meditation dome with custom lighting](/img/dome-studio.jpg)
 
@@ -41,7 +42,7 @@ The requirements were demanding:
 - **Battery-powered** - Long enough runtime for a full day of sessions
 - **Comfortable** - The electronics had to disappear inside a soft pillow
 
-The hardest constraint was the sync. Wireless audio protocols introduce latency. Bluetooth is 40-200ms late. Even AirPlay has buffering delays. When you're trying to make someone *feel* what they're *hearing*, milliseconds matter.
+The hardest constraint was the sync. Wireless audio protocols introduce latency. Bluetooth is 40-200ms late. Even AirPlay has buffering delays. When you're trying to make someone _feel_ what they're _hearing_, milliseconds matter.
 
 ---
 
@@ -84,7 +85,7 @@ Each pillow had a simple dial that clients could adjust without looking - turn i
 
 ## Making It Disappear
 
-The goal was for clients to not think about the technology at all. They should lie down, adjust the dial to their preference, close their eyes, and simply *feel* the meditation.
+The goal was for clients to not think about the technology at all. They should lie down, adjust the dial to their preference, close their eyes, and simply _feel_ the meditation.
 
 This meant:
 

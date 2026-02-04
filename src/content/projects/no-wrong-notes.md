@@ -1,7 +1,8 @@
 FEATURED: true
-TAGS: Vue, TypeScript, Web Audio, Music Theory, MIDI, Creative Tools
+TAGS: Vue, TypeScript, Web Audio, Music Theory, MIDI, Creative Tools, Software
 YEAR: 2025
 HOVER_VIDEO: /video/no-wrong-notes.mov
+PRIORITY: 9
 
 ![No Wrong Notes - ScalePad interface](/img/no-wrong-notes/2.png)
 
@@ -95,7 +96,7 @@ Building this taught me something that years of playing by ear never did:
 
 Each of these is completely distinct. Each has a limited range of options. They combine in predictable ways.
 
-Music theory isn't mysterious or infinitely complex. It's a system with finite components that interact according to rules. Once you see it that way, it becomes *knowable*.
+Music theory isn't mysterious or infinitely complex. It's a system with finite components that interact according to rules. Once you see it that way, it becomes _knowable_.
 
 That's the real value of building things to learn. You can't hide from the fundamentals when you have to implement them in code.
 

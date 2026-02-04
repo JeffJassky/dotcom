@@ -1,8 +1,20 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
-const featuredProjects = ref([])
+const allProjects = ref([])
 const archiveProjects = ref([])
+const activeFilter = ref('All')
+
+const filters = ['All', 'Hardware', 'Software']
+
+const filteredProjects = computed(() => {
+  if (activeFilter.value === 'All') {
+    return allProjects.value
+  }
+  return allProjects.value.filter(project =>
+    project.tags.some(tag => tag.toLowerCase() === activeFilter.value.toLowerCase())
+  )
+})
 
 const playVideo = (event) => {
   const video = event.currentTarget.querySelector('video')
@@ -49,6 +61,10 @@ onMounted(() => {
     const hoverVideoMatch = content.match(/^HOVER_VIDEO:\s*(.*)/m)
     const hoverVideo = hoverVideoMatch ? hoverVideoMatch[1].trim() : null
 
+    // Extract Priority (lower = higher priority, default to 99)
+    const priorityMatch = content.match(/^PRIORITY:\s*(\d+)/m)
+    const priority = priorityMatch ? parseInt(priorityMatch[1], 10) : 99
+
     // Extract first image
     const imageMatch = content.match(/!\[.*?\]\((.*?)\)/)
     const image = imageMatch ? imageMatch[1] : null
@@ -73,7 +89,7 @@ onMounted(() => {
       }
     }
 
-    const project = { id, title, description, tags, year, image, isFeatured, hoverVideo }
+    const project = { id, title, description, tags, year, image, isFeatured, hoverVideo, priority }
 
     if (isFeatured) {
       featured.push(project)
@@ -82,12 +98,8 @@ onMounted(() => {
     }
   }
 
-  // Sort featured by year (newest first)
-  featuredProjects.value = featured.sort((a, b) => {
-    const yearA = a.year.split('-')[0] || '0'
-    const yearB = b.year.split('-')[0] || '0'
-    return yearB.localeCompare(yearA)
-  })
+  // Sort featured by priority (lower number = higher priority)
+  allProjects.value = featured.sort((a, b) => a.priority - b.priority)
 
   // Sort archive by year (newest first)
   archiveProjects.value = archive.sort((a, b) => {
@@ -100,15 +112,25 @@ onMounted(() => {
 
 <template>
   <div class="home">
-    <!-- Featured Projects -->
+    <!-- Filter Header -->
     <div class="index-header technical">
-      <span>FEATURED_WORKS</span>
-      <span>{{ featuredProjects.length }} PROJECTS</span>
+      <div class="filter-tabs">
+        <button
+          v-for="filter in filters"
+          :key="filter"
+          :class="['filter-tab', { active: activeFilter === filter }]"
+          @click="activeFilter = filter"
+        >
+          {{ filter }}
+        </button>
+      </div>
+      <span>{{ filteredProjects.length }} PROJECTS</span>
     </div>
 
+    <!-- Featured Projects -->
     <section class="featured-grid">
       <router-link
-        v-for="project in featuredProjects"
+        v-for="project in filteredProjects"
         :key="project.id"
         :to="'/project/' + project.id"
         class="featured-card"
@@ -145,12 +167,12 @@ onMounted(() => {
     </section>
 
     <!-- Archive Projects -->
-    <div class="archive-header technical" v-if="archiveProjects.length">
+    <div class="archive-header technical" v-if="archiveProjects.length && activeFilter === 'All'">
       <span>ARCHIVE</span>
       <span>{{ archiveProjects.length }} PROJECTS</span>
     </div>
 
-    <section class="archive-list" v-if="archiveProjects.length">
+    <section class="archive-list" v-if="archiveProjects.length && activeFilter === 'All'">
       <router-link
         v-for="project in archiveProjects"
         :key="project.id"
@@ -175,9 +197,38 @@ onMounted(() => {
 .index-header, .archive-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 2rem;
   font-size: 0.6rem;
   color: var(--text-muted);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.filter-tab {
+  font-family: @font-mono;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.75rem;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: var(--text-title);
+  }
+
+  &.active {
+    color: var(--text-title);
+    border-color: var(--border-color);
+    background: var(--code-bg);
+  }
 }
 
 .archive-header {

@@ -1,7 +1,8 @@
 FEATURED: true
-TAGS: TypeScript, Vue, Simulation, Neuroscience, ODE Solver, Web Workers
+TAGS: TypeScript, Vue, Simulation, Neuroscience, ODE Solver, Web Workers, Software
 YEAR: 2024-2026
 HOVER_VIDEO: /video/kynetic.mov
+PRIORITY: 2
 
 ![Kynetic Bio - Understand your body. Minute by minute.](/img/kynetic-hero.png)
 

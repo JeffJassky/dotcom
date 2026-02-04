@@ -1,7 +1,8 @@
 FEATURED: true
-TAGS: NodeJS, AWS, Backbone/Marionette, DRM Video, Load Testing, Payment Processing
+TAGS: NodeJS, AWS, Backbone/Marionette, DRM Video, Load Testing, Payment Processing, Software
 YEAR: 2017
 HOVER_VIDEO: /video/mayweather-vs-mcgregor.mov
+PRIORITY: 6
 
 ![Mayweather vs McGregor promotional banner](/img/1320x560-e6cefd6016.jpg)
 
