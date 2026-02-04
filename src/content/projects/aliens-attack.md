@@ -1,5 +1,7 @@
 TAGS: Experiential Marketing, Game Design, NodeJS, Raspberry Pi, Arduino
 YEAR: 2016
+FEATURED: true
+HOVER_VIDEO: /video/aliens-attack.mp4
 
 # **Aliens Attack!!\***Writing a physical arcade game in NodeJS\*
 

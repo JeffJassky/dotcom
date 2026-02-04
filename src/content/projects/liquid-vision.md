@@ -1,5 +1,6 @@
 TAGS: Product Design, Prototyping
 YEAR: 2015
+featured: true
 
 The project was to create a series of glasses that have moving colored liquid inside of the lenses. They had to be comfortable, wearable, and suitable for a high fashion photo shoot.
 

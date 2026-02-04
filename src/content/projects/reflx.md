@@ -1,10 +1,11 @@
 FEATURED: true
 TAGS: Hardware, Software, Product Design, Startup, ElectronJS, React Native, AWS, IoT
 YEAR: 2017-2021
+HOVER_VIDEO: /video/aura.mp4
 
-![Aura Mirror on stand with ring light glowing](/img/aura-mirror-stand.png)
+![Reflx - Your social selfie mirror](/img/aura-reflx-branding.png)
 
-# From Art Project to Hardware Startup
+# **From Art Project to Hardware Startup**
 
 ### Reflx → Aura Mirrors (2017–2021)
 
@@ -27,8 +28,6 @@ But the thing I built was real, and people responded to it. So I kept going.
 <div class="video-container">
   <iframe src="https://player.vimeo.com/video/274183204" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
 </div>
-
----
 
 ## Making It Feel Like Magic
 
@@ -84,7 +83,11 @@ Salons live and die by referrals and social media. Every client who walks out lo
 
 The mirror solved all of this. Clients _want_ to take photos when they look good. The mirror made it effortless. And because every interaction was tracked, salon owners could finally see which clients were driving referrals.
 
+![You do good hair. Now let them share it.](/img/aura-marketing-hero.png)
+
 **Shannon King** of Hair & Co Brooklyn became an early believer. He put a prototype in his salon and helped me get into ISSE, a major hair industry conference in Long Beach, to connect with potential customers and partners. That kind of support from someone who actually understood the industry was invaluable.
+
+![ISSE conference marketing - Preorder March](/img/aura-isse-card.png)
 
 <div class="video-container">
   <iframe src="https://player.vimeo.com/video/330253250" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
@@ -116,6 +119,12 @@ The electrical system centered on an NVidia Jetson Nano driving the display, cam
 
 ![Electrical block diagram](/img/aura-electrical-diagram.png)
 
+![Glass Light - 400 LEDs, 16 million colors](/img/aura-lighting-feature.png)
+
+![TouchGlass - 19.5 inch multitouch display](/img/aura-touchglass-feature.png)
+
+![Camera - 8MP Sony HDR sensor](/img/aura-camera-feature.png)
+
 I designed a custom PCB to handle power distribution, LED control, and peripheral connections.
 
 ![Custom PCB design - Reflx Aura v1.0.0](/img/aura-pcb-design.png)
@@ -137,6 +146,8 @@ I designed a custom PCB to handle power distribution, LED control, and periphera
 ![Client app - appointments and photo history](/img/aura-app-appointments.png)
 
 ![Client app - referral and social sharing](/img/aura-app-referral.png)
+
+![The complete ecosystem - Mirror, Dashboard, Mobile Apps](/img/aura-ecosystem.png)
 
 ### Go-to-Market
 

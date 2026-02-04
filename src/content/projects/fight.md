@@ -1,6 +1,7 @@
 FEATURED: true
 TAGS: NodeJS API, Backbone / Marionette, DRM Encrypted HTML5 Video
 YEAR: 2017
+HOVER_VIDEO: /video/mayweather-vs-mcgregor.mov
 
 ![1320x560-e6cefd6016.jpg](/img/1320x560-e6cefd6016.jpg)
 

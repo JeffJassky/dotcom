@@ -2,12 +2,19 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
+import texmath from 'markdown-it-texmath'
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
 
 const route = useRoute()
 const md = new MarkdownIt({
   html: true,
   linkify: true,
   typographer: true
+}).use(texmath, {
+  engine: katex,
+  delimiters: ['dollars', 'brackets'],
+  katexOptions: { macros: { "\\RR": "\\mathbb{R}" } }
 })
 
 const content = ref('')
@@ -141,6 +148,46 @@ watch(() => route.params.id, loadProject)
     font-size: 0.8rem;
     margin: 3rem 0;
     overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      font-family: @font-mono;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--code-bg);
+    }
+
+    td {
+      color: var(--text-body);
+    }
+
+    tr:hover td {
+      background: var(--code-bg);
+    }
+  }
+
+  // KaTeX math styling
+  .katex-display {
+    margin: 2rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .katex {
+    font-size: 1.1em;
   }
 
   hr {

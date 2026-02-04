@@ -1,10 +1,11 @@
 FEATURED: true
 TAGS: NodeJS, Python, Vue.JS, OpenCV
 YEAR: 2020-2021
+HOVER_VIDEO: /video/storyfolder.mp4
 
 ![Screen Shot 2020-11-20 at 2.37.29 PM.png](/img/Screen+Shot+2020-11-20+at+2.37.29+PM.png)
 
-# **StoryFolder**Launching a SAAS Product in 48 hours
+# **Reverse-Engineering Stories From TV and Movies with Software**Launching a SAAS Product in 48 hours
 
 From ideation to market research, development, deployment, and feedback follow the launch of a new software tool for storytellers.
 

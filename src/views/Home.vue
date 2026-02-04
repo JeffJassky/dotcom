@@ -4,6 +4,22 @@ import { ref, onMounted } from 'vue'
 const featuredProjects = ref([])
 const archiveProjects = ref([])
 
+const playVideo = (event) => {
+  const video = event.currentTarget.querySelector('video')
+  if (video) {
+    video.currentTime = 0
+    video.play().catch(() => {})
+  }
+}
+
+const pauseVideo = (event) => {
+  const video = event.currentTarget.querySelector('video')
+  if (video) {
+    video.pause()
+    video.currentTime = 0
+  }
+}
+
 onMounted(() => {
   const modules = import.meta.glob('../content/projects/*.md', { as: 'raw', eager: true })
   const featured = []
@@ -29,6 +45,10 @@ onMounted(() => {
     const yearMatch = content.match(/^YEAR:\s*(.*)/m)
     const year = yearMatch ? yearMatch[1].trim() : ''
 
+    // Extract Hover Video
+    const hoverVideoMatch = content.match(/^HOVER_VIDEO:\s*(.*)/m)
+    const hoverVideo = hoverVideoMatch ? hoverVideoMatch[1].trim() : null
+
     // Extract first image
     const imageMatch = content.match(/!\[.*?\]\((.*?)\)/)
     const image = imageMatch ? imageMatch[1] : null
@@ -44,6 +64,7 @@ onMounted(() => {
           !line.startsWith('TAGS:') &&
           !line.startsWith('FEATURED:') &&
           !line.startsWith('YEAR:') &&
+          !line.startsWith('HOVER_VIDEO:') &&
           !line.startsWith('[') &&
           !line.startsWith('---') &&
           line.length > 20) {
@@ -52,7 +73,7 @@ onMounted(() => {
       }
     }
 
-    const project = { id, title, description, tags, year, image, isFeatured }
+    const project = { id, title, description, tags, year, image, isFeatured, hoverVideo }
 
     if (isFeatured) {
       featured.push(project)
@@ -91,9 +112,20 @@ onMounted(() => {
         :key="project.id"
         :to="'/project/' + project.id"
         class="featured-card"
+        @mouseenter="playVideo"
+        @mouseleave="pauseVideo"
       >
         <div class="card-image" v-if="project.image">
           <img :src="project.image" :alt="project.title" />
+          <video
+            v-if="project.hoverVideo"
+            :src="project.hoverVideo"
+            muted
+            loop
+            playsinline
+            preload="auto"
+            class="hover-video"
+          ></video>
         </div>
         <div class="card-content">
           <div class="card-year technical">{{ project.year }}</div>
@@ -180,6 +212,10 @@ onMounted(() => {
       transform: scale(1.05);
     }
 
+    .hover-video {
+      opacity: 1;
+    }
+
     .card-title {
       color: var(--text-title); // Keep title consistent on hover
     }
@@ -200,6 +236,18 @@ onMounted(() => {
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  .hover-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+  }
+
   // Atmospheric radial gradient overlay
   &::after {
     content: '';
@@ -207,6 +255,7 @@ onMounted(() => {
     inset: 0;
     background: radial-gradient(circle at 50% 100%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
     pointer-events: none;
+    z-index: 2;
   }
 }
 

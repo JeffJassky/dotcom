@@ -1,8 +1,9 @@
 FEATURED: true
 TAGS: Kickstarter, Mechanical, Electrical & Software Engineering, 3D Printing & Design, MIDI Music Software
 YEAR: 2014
+HOVER_VIDEO: /video/brobot.mp4
 
-# **Robotic Drumset\***Bridging the Digital / Analog gap in music\*
+# **Building a Robotic Drummer**
 
 ### _2014_
 

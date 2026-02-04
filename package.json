@@ -14,7 +14,9 @@
   "dependencies": {
     "@vueuse/core": "^14.2.0",
     "axios": "^1.13.4",
+    "katex": "^0.16.28",
     "markdown-it": "^14.1.0",
+    "markdown-it-texmath": "^1.0.0",
     "vue": "^3.5.27",
     "vue-router": "^5.0.2"
   },

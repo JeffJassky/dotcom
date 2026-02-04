@@ -2,9 +2,11 @@ FEATURED: true
 TAGS: Product Design & Development, Digital Signal Processing (audio), Circuit board design, Experiential Marketing, Raspberry Pi
 YEAR: 2017
 
-![dome studio page-49dc65 (1).jpg](/img/dome+studio+page-49dc65+%281%29.jpg)
+![dome-studio.jpg](/img/dome-studio.jpg)
 
-# **Feeling the Music\***Immersive meditation through vibration\*
+# **Feeling the Music**
+
+## Immersive meditation through vibration
 
 ### 2017
 
